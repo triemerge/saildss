@@ -2,18 +2,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Train, MapPin, Clock, TrendingUp } from 'lucide-react';
-import { formatIndianCurrency } from '@/lib/indian-formatter';
+
 
 interface Plan {
   rakeId: string;
   orderId: string;
   source: string;
   destination: string;
-  clubbing: string;
   loadPoint: string;
   mode: string;
-  cost: number;
   priority: number;
+  wagonsUsed: number;
+  totalWagons: number;
   utilization: number;
   status: string;
 }
@@ -60,8 +60,8 @@ export function PlanTable({ plans }: PlanTableProps) {
                   <span className="font-medium">{plan.orderId}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Cost:</span>
-                  <span className="font-medium">{formatIndianCurrency(plan.cost)}</span>
+                  <span className="text-muted-foreground">Wagons:</span>
+                  <span className="font-medium">{plan.wagonsUsed}/{plan.totalWagons}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Utilization:</span>
@@ -90,12 +90,10 @@ export function PlanTable({ plans }: PlanTableProps) {
                   <TableHead className="font-semibold min-w-[100px]">Order ID</TableHead>
                   <TableHead className="font-semibold min-w-[100px] hidden sm:table-cell">Source</TableHead>
                   <TableHead className="font-semibold min-w-[100px] hidden sm:table-cell">Destination</TableHead>
-                  <TableHead className="font-semibold min-w-[80px]">Mode</TableHead>
-                  <TableHead className="font-semibold min-w-[100px] hidden md:table-cell">Clubbing</TableHead>
                   <TableHead className="font-semibold min-w-[100px] hidden lg:table-cell">Load Point</TableHead>
                   <TableHead className="font-semibold min-w-[80px]">Priority</TableHead>
-                  <TableHead className="font-semibold min-w-[120px] hidden md:table-cell">Utilization</TableHead>
-                  <TableHead className="font-semibold min-w-[100px]">Cost (₹)</TableHead>
+                  <TableHead className="font-semibold min-w-[100px] hidden md:table-cell">Wagons</TableHead>
+                  <TableHead className="font-semibold min-w-[120px]">Utilization</TableHead>
                   <TableHead className="font-semibold min-w-[100px] hidden sm:table-cell">Status</TableHead>
                 </TableRow>
               </TableHeader>
@@ -106,24 +104,14 @@ export function PlanTable({ plans }: PlanTableProps) {
                     <TableCell className="text-xs sm:text-sm">{plan.orderId}</TableCell>
                     <TableCell className="text-xs sm:text-sm hidden sm:table-cell">{plan.source}</TableCell>
                     <TableCell className="text-xs sm:text-sm hidden sm:table-cell">{plan.destination}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-1 sm:gap-2">
-                        {getModeIcon(plan.mode)}
-                        <span className="text-xs sm:text-sm">{plan.mode}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell">
-                      <Badge variant={plan.clubbing.includes('Multi') ? 'default' : 'secondary'} className="text-xs">
-                        {plan.clubbing}
-                      </Badge>
-                    </TableCell>
                     <TableCell className="text-xs sm:text-sm hidden lg:table-cell">{plan.loadPoint}</TableCell>
                     <TableCell>
                       <Badge variant={plan.priority === 1 ? 'destructive' : plan.priority === 2 ? 'default' : 'secondary'} className="text-xs">
                         P{plan.priority}
                       </Badge>
                     </TableCell>
-                    <TableCell className="hidden md:table-cell">
+                    <TableCell className="text-xs sm:text-sm hidden md:table-cell">{plan.wagonsUsed}/{plan.totalWagons}</TableCell>
+                    <TableCell>
                       <div className="flex items-center gap-2">
                         <div className="flex-1 bg-secondary rounded-full h-2 min-w-[60px]">
                           <div 
@@ -134,7 +122,6 @@ export function PlanTable({ plans }: PlanTableProps) {
                         <span className="text-xs text-muted-foreground w-10">{plan.utilization}%</span>
                       </div>
                     </TableCell>
-                    <TableCell className="font-medium text-xs sm:text-sm">{formatIndianCurrency(plan.cost)}</TableCell>
                     <TableCell className="hidden sm:table-cell">
                       <Badge className={`${getStatusColor(plan.status)} text-xs`}>
                         {plan.status}
@@ -161,9 +148,9 @@ export function PlanTable({ plans }: PlanTableProps) {
               <span className="font-semibold text-success">Optimization Summary</span>
             </div>
             <div className="text-sm text-muted-foreground">
-              Generated {plans.length} optimized rake formations with average utilization of{' '}
-              {plans.length > 0 ? (plans.reduce((sum, plan) => sum + plan.utilization, 0) / plans.length).toFixed(1) : 0}%
-              and total cost minimization achieved through AI/ML algorithms.
+              Generated {plans.length} rake formations with average utilization of{' '}
+              {plans.length > 0 ? (plans.reduce((sum, plan) => sum + plan.utilization, 0) / plans.length).toFixed(1) : 0}%.
+              Total wagons used: {plans.reduce((sum, plan) => sum + plan.wagonsUsed, 0)}.
             </div>
           </div>
         )}

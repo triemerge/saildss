@@ -3,17 +3,16 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { OptimizationEngine, MockDataService, OptimizationParams } from '@/lib/optimization-engine';
+import { OptimizationEngine, MockDataService } from '@/lib/optimization-engine';
 import { PlanTable } from './PlanTable';
 import { MatrixTable } from './MatrixTable';
-import { CostBreakdown } from './CostBreakdown';
 import { Skeleton } from '@/components/ui/skeleton';
 import { StockyardDialog } from './StockyardDialog';
 import { OrderDialog } from './OrderDialog';
 import { RakeDialog } from './RakeDialog';
 import { LoadingPointDialog } from './LoadingPointDialog';
-import { Zap, Train, TrendingUp, Clock, DollarSign, Settings, Play, Loader2, Database, Plus, Bot, Package, Users, Truck, MapPin, Edit3, Trash2, Brain, Sparkles } from 'lucide-react';
-import { formatIndianCurrency, formatIndianNumber } from '@/lib/indian-formatter';
+import { Zap, Train, TrendingUp, Play, Loader2, Database, Plus, Package, Users, Truck, MapPin, Edit3, Trash2 } from 'lucide-react';
+import { formatIndianNumber } from '@/lib/indian-formatter';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,20 +26,8 @@ import {
 
 interface OptimizationResult {
   plan: any[];
-  totalCost: number;
   utilization: number;
-  suggestions: string;
-  costBreakdown: {
-    loading: number;
-    transport: number;
-    penalty: number;
-    idle: number;
-  };
-  metrics: {
-    onTimeDispatch: number;
-    rakeUtilization: number;
-    costSaving: number;
-  };
+  loadingPoints?: any[];
 }
 
 const STORAGE_KEY = 'sail_optimization_input_data';
@@ -64,13 +51,6 @@ export function OptimizationDashboard() {
   const [jsonError, setJsonError] = useState<string | null>(null);
   const [optimizationResult, setOptimizationResult] = useState<OptimizationResult | null>(null);
   const [isOptimizing, setIsOptimizing] = useState(false);
-  const [optimizationParams, setOptimizationParams] = useState<OptimizationParams>({
-    priorityWeight: 5,
-    costStrategy: 'balanced',
-    utilizationTarget: 95,
-    maxWaitTime: 24,
-    clubbingAllowed: true
-  });
   const resultsRef = useRef<HTMLDivElement>(null);
 
   // Dialog states
@@ -106,11 +86,22 @@ export function OptimizationDashboard() {
       resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
     
-    // Simulate AI processing time
-    await new Promise(resolve => setTimeout(resolve, 2500));
+    // Simulate processing time
+    await new Promise(resolve => setTimeout(resolve, 1500));
     
-    const result = OptimizationEngine.optimize(parsedData, optimizationParams);
+    const result = OptimizationEngine.optimize(parsedData);
     setOptimizationResult(result);
+    
+    // Update loading point utilizations with accurate values from optimization
+    if (result.loadingPoints) {
+      const updatedData = {
+        ...parsedData,
+        loadingPoints: result.loadingPoints
+      };
+      setParsedData(updatedData);
+      setInputData(JSON.stringify(updatedData, null, 2));
+    }
+    
     setIsOptimizing(false);
   };
 
@@ -262,89 +253,6 @@ export function OptimizationDashboard() {
 
           <TabsContent value="optimization" className="space-y-6">
             <div className="grid gap-6">
-              {/* Optimization Parameters */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Settings className="h-5 w-5" />
-                    Optimization Parameters
-                  </CardTitle>
-                  <CardDescription>
-                    Configure optimization settings and constraints
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div>
-                      <label className="text-sm font-medium mb-2 block">Priority Weight: {optimizationParams.priorityWeight}</label>
-                      <input
-                        type="range"
-                        min="1"
-                        max="10"
-                        value={optimizationParams.priorityWeight}
-                        onChange={(e) => setOptimizationParams(prev => ({ ...prev, priorityWeight: parseInt(e.target.value) }))}
-                        className="w-full"
-                      />
-                      <div className="text-xs text-muted-foreground mt-1">1 = Cost Focus, 10 = Priority Focus</div>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium mb-2 block">Cost Strategy</label>
-                      <select 
-                        className="w-full p-2 border rounded-md"
-                        value={optimizationParams.costStrategy}
-                        onChange={(e) => setOptimizationParams(prev => ({ ...prev, costStrategy: e.target.value as any }))}
-                      >
-                        <option value="aggressive">Aggressive (Max Cost Saving)</option>
-                        <option value="balanced">Balanced (Optimal Mix)</option>
-                        <option value="conservative">Conservative (Risk Averse)</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium mb-2 block">Utilization Target (%)</label>
-                      <input
-                        type="number"
-                        min="80"
-                        max="100"
-                        value={optimizationParams.utilizationTarget}
-                        onChange={(e) => setOptimizationParams(prev => ({ ...prev, utilizationTarget: parseInt(e.target.value) }))}
-                        className="w-full p-2 border rounded-md"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium mb-2 block">Max Wait Time (hrs)</label>
-                      <input
-                        type="number"
-                        min="1"
-                        max="72"
-                        value={optimizationParams.maxWaitTime}
-                        onChange={(e) => setOptimizationParams(prev => ({ ...prev, maxWaitTime: parseInt(e.target.value) }))}
-                        className="w-full p-2 border rounded-md"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="mt-4 p-4 bg-muted rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Bot className="h-5 w-5 text-primary" />
-                        <span className="font-medium">AI Configuration</span>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <label className="flex items-center gap-2 text-sm">
-                          <input
-                            type="checkbox"
-                            checked={optimizationParams.clubbingAllowed}
-                            onChange={(e) => setOptimizationParams(prev => ({ ...prev, clubbingAllowed: e.target.checked }))}
-                            className="rounded"
-                          />
-                          Allow Order Clubbing
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
               {/* Quick Actions */}
               <div className="grid grid-cols-1 gap-4 max-w-md">
                 <Button onClick={handleOptimize} disabled={isOptimizing || !parsedData} className="h-20 flex-col">
@@ -453,10 +361,6 @@ export function OptimizationDashboard() {
                                    <div className="flex justify-between">
                                      <span className="text-xs text-muted-foreground">Quantity:</span>
                                      <span className="text-xs font-medium">{formatIndianNumber(stockyard.quantity)} tons</span>
-                                   </div>
-                                   <div className="flex justify-between">
-                                     <span className="text-xs text-muted-foreground">Cost/Ton:</span>
-                                     <span className="text-xs font-medium">{formatIndianCurrency(stockyard.costPerTon)}</span>
                                    </div>
                                 </div>
                               </CardContent>
@@ -677,43 +581,27 @@ export function OptimizationDashboard() {
 
                     <TabsContent value="constraints">
                       <div className="space-y-4">
-                        <h3 className="text-lg font-medium">Optimization Constraints</h3>
+                        <h3 className="text-lg font-medium">Rake Constraints</h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
-                            <label className="text-sm font-medium mb-2 block">Min Rake Size</label>
+                            <label className="text-sm font-medium mb-2 block">Max Wagons Per Rake</label>
                             <input
                               type="number"
-                              value={parsedData?.constraints?.minRakeSize || 0}
-                              onChange={(e) => handleUpdateConstraint('minRakeSize', parseInt(e.target.value))}
+                              value={parsedData?.constraints?.maxWagonsPerRake || 43}
+                              onChange={(e) => handleUpdateConstraint('maxWagonsPerRake', parseInt(e.target.value))}
                               className="w-full p-2 border rounded-md"
                             />
+                            <p className="text-xs text-muted-foreground mt-1">Maximum number of wagons in a rake formation</p>
                           </div>
                           <div>
-                            <label className="text-sm font-medium mb-2 block">Siding Capacity</label>
+                            <label className="text-sm font-medium mb-2 block">Max Wagon Weight (tons)</label>
                             <input
                               type="number"
-                              value={parsedData?.constraints?.sidingCapacity || 0}
-                              onChange={(e) => handleUpdateConstraint('sidingCapacity', parseInt(e.target.value))}
+                              value={parsedData?.constraints?.maxWagonWeight || 64}
+                              onChange={(e) => handleUpdateConstraint('maxWagonWeight', parseInt(e.target.value))}
                               className="w-full p-2 border rounded-md"
                             />
-                          </div>
-                          <div>
-                            <label className="text-sm font-medium mb-2 block">Max Loading Time (hrs)</label>
-                            <input
-                              type="number"
-                              value={parsedData?.constraints?.maxLoadingTime || 0}
-                              onChange={(e) => handleUpdateConstraint('maxLoadingTime', parseInt(e.target.value))}
-                              className="w-full p-2 border rounded-md"
-                            />
-                          </div>
-                          <div>
-                            <label className="text-sm font-medium mb-2 block">Rail Capacity Limit</label>
-                            <input
-                              type="number"
-                              value={parsedData?.constraints?.railCapacityLimit || 0}
-                              onChange={(e) => handleUpdateConstraint('railCapacityLimit', parseInt(e.target.value))}
-                              className="w-full p-2 border rounded-md"
-                            />
+                            <p className="text-xs text-muted-foreground mt-1">Maximum weight capacity per wagon in tons</p>
                           </div>
                         </div>
                       </div>
@@ -725,27 +613,18 @@ export function OptimizationDashboard() {
               {/* Loading State - AI Generation */}
               {isOptimizing && (
                 <div ref={resultsRef} className="space-y-6 max-w-full overflow-x-hidden">
-                  {/* AI Processing Header */}
-                  <Card className="bg-gradient-to-r from-primary/10 via-primary/5 to-background border-primary/20">
+                  <Card>
                     <CardContent className="p-6">
                       <div className="flex items-center justify-center gap-3">
-                        <Brain className="h-6 w-6 text-primary animate-pulse" />
-                        <div className="flex flex-col items-center">
-                          <div className="flex items-center gap-2">
-                            <Sparkles className="h-5 w-5 text-primary animate-pulse" />
-                            <span className="text-lg font-semibold">AI Optimization in Progress</span>
-                            <Sparkles className="h-5 w-5 text-primary animate-pulse" />
-                          </div>
-                          <p className="text-sm text-muted-foreground mt-1">Analyzing constraints and generating optimal rake formation...</p>
-                        </div>
                         <Loader2 className="h-6 w-6 text-primary animate-spin" />
+                        <span className="text-lg font-semibold">Optimizing Rake Formation...</span>
                       </div>
                     </CardContent>
                   </Card>
 
                   {/* Loading Skeletons for Metrics */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-                    {[1, 2, 3, 4].map((i) => (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
+                    {[1, 2].map((i) => (
                       <Card key={i} className="animate-pulse">
                         <CardHeader className="pb-3">
                           <Skeleton className="h-4 w-24" />
@@ -777,7 +656,7 @@ export function OptimizationDashboard() {
               {optimizationResult && !isOptimizing && (
                 <div className="space-y-6 max-w-full overflow-x-hidden">
                   {/* Key Metrics */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
                     <Card className="bg-gradient-primary text-primary-foreground">
                       <CardContent className="p-6">
                         <div className="flex items-center justify-between">
@@ -785,7 +664,7 @@ export function OptimizationDashboard() {
                             <p className="text-sm opacity-90">Plans Generated</p>
                             <p className="text-2xl font-bold">{optimizationResult.plan.length}</p>
                           </div>
-                          <Zap className="h-8 w-8 opacity-80" />
+                          <Train className="h-8 w-8 opacity-80" />
                         </div>
                       </CardContent>
                     </Card>
@@ -794,91 +673,25 @@ export function OptimizationDashboard() {
                       <CardContent className="p-6">
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="text-sm opacity-90">Utilization</p>
+                            <p className="text-sm opacity-90">Avg Rake Utilization</p>
                             <p className="text-2xl font-bold">{optimizationResult.utilization.toFixed(1)}%</p>
                           </div>
                           <TrendingUp className="h-8 w-8 opacity-80" />
                         </div>
                       </CardContent>
                     </Card>
-
-                    <Card className="bg-gradient-accent text-accent-foreground">
-                      <CardContent className="p-6">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="text-sm opacity-90">Cost Saving</p>
-                            <p className="text-2xl font-bold">{optimizationResult.metrics?.costSaving.toFixed(1)}%</p>
-                          </div>
-                          <Clock className="h-8 w-8 opacity-80" />
-                        </div>
-                      </CardContent>
-                    </Card>
-
-                    <Card className="border-destructive/20 bg-card">
-                      <CardContent className="p-6">
-                        <div className="flex items-center justify-between">
-                           <div>
-                             <p className="text-sm text-muted-foreground">Total Cost</p>
-                             <p className="text-2xl font-bold text-foreground">{formatIndianCurrency(optimizationResult.totalCost)}</p>
-                           </div>
-                          <DollarSign className="h-8 w-8 text-muted-foreground" />
-                        </div>
-                      </CardContent>
-                    </Card>
                   </div>
-
-                  {/* Cost Breakdown */}
-                  <CostBreakdown costData={optimizationResult.costBreakdown} costSaving={optimizationResult.metrics.costSaving} />
 
                    {/* Optimization Plans */}
                   <Card className="max-w-full overflow-hidden">
                     <CardHeader>
-                      <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                        <span className="flex items-center gap-2">
-                          <Train className="h-5 w-5" />
-                          Optimized Rake Formation Plans
-                        </span>
-                        <div className="flex gap-2">
-                          <select className="p-2 border rounded-md text-sm w-full sm:w-auto">
-                            <option>All Plans</option>
-                            <option>Priority 1 Only</option>
-                            <option>Rail Only</option>
-                            <option>Road Only</option>
-                          </select>
-                        </div>
+                      <CardTitle className="flex items-center gap-2">
+                        <Train className="h-5 w-5" />
+                        Optimized Rake Formation Plans
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="max-w-full overflow-x-hidden">
                       <PlanTable plans={optimizationResult.plan} />
-                    </CardContent>
-                  </Card>
-
-                  {/* AI Insights */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Bot className="h-5 w-5 text-primary" />
-                        AI Insights & Recommendations
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="p-4 bg-primary/5 rounded-lg border-l-4 border-primary">
-                        <p className="text-sm">{optimizationResult.suggestions}</p>
-                      </div>
-                      <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                          <span className="text-sm text-muted-foreground">On-Time Dispatch:</span>
-                          <Badge variant="secondary">{optimizationResult.metrics?.onTimeDispatch.toFixed(1)}%</Badge>
-                        </div>
-                        <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                          <span className="text-sm text-muted-foreground">Rake Efficiency:</span>
-                          <Badge variant="secondary">{optimizationResult.utilization.toFixed(1)}%</Badge>
-                        </div>
-                        <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                          <span className="text-sm text-muted-foreground">Predictive Analytics:</span>
-                          <Badge variant="secondary">Machine Learning</Badge>
-                        </div>
-                      </div>
                     </CardContent>
                   </Card>
                 </div>
