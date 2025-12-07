@@ -13,15 +13,28 @@ interface Order {
   priority: number;
   mode: string;
   deadline: string;
-  destination: string;
+  destCode?: string;
 }
 
 interface OrderDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   order?: Order;
-  onSave: (order: Order) => void;
+  onSave: (order: Order) => void | Promise<void>;
 }
+
+const DEST_CODES = [
+  { code: 'DEL', name: 'Delhi' },
+  { code: 'BOM', name: 'Mumbai' },
+  { code: 'KOL', name: 'Kolkata' },
+  { code: 'MAS', name: 'Chennai' },
+  { code: 'HYD', name: 'Hyderabad' },
+  { code: 'PUN', name: 'Pune' },
+  { code: 'JAM', name: 'Jamshedpur' },
+  { code: 'BLY', name: 'Bellary' },
+  { code: 'AHM', name: 'Ahmedabad' },
+  { code: 'BLR', name: 'Bangalore' },
+];
 
 export function OrderDialog({ open, onOpenChange, order, onSave }: OrderDialogProps) {
   const [formData, setFormData] = useState<Order>({
@@ -32,7 +45,7 @@ export function OrderDialog({ open, onOpenChange, order, onSave }: OrderDialogPr
     priority: 2,
     mode: 'rail',
     deadline: '',
-    destination: '',
+    destCode: '',
   });
 
   useEffect(() => {
@@ -47,7 +60,7 @@ export function OrderDialog({ open, onOpenChange, order, onSave }: OrderDialogPr
         priority: 2,
         mode: 'rail',
         deadline: '',
-        destination: '',
+        destCode: '',
       });
     }
   }, [order, open]);
@@ -86,7 +99,7 @@ export function OrderDialog({ open, onOpenChange, order, onSave }: OrderDialogPr
                 id="customer"
                 value={formData.customer}
                 onChange={(e) => setFormData({ ...formData, customer: e.target.value })}
-                placeholder="e.g., Auto Corp Ltd"
+                placeholder="e.g., CMO Delhi"
                 required
               />
             </div>
@@ -101,8 +114,7 @@ export function OrderDialog({ open, onOpenChange, order, onSave }: OrderDialogPr
                   <SelectItem value="Steel Plates">Steel Plates</SelectItem>
                   <SelectItem value="TMT Bars">TMT Bars</SelectItem>
                   <SelectItem value="Wire Rods">Wire Rods</SelectItem>
-                  <SelectItem value="Rails">Rails</SelectItem>
-                  <SelectItem value="Pig Iron">Pig Iron</SelectItem>
+                  <SelectItem value="Steel Billets">Steel Billets</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -114,10 +126,27 @@ export function OrderDialog({ open, onOpenChange, order, onSave }: OrderDialogPr
                 value={formData.quantity}
                 onChange={(e) => setFormData({ ...formData, quantity: parseFloat(e.target.value) })}
                 min="0"
-                step="0.1"
+                step="1"
                 required
               />
             </div>
+            {formData.mode === 'rail' && (
+              <div className="grid gap-2">
+                <Label htmlFor="destCode">Destination Code (Railway Station)</Label>
+                <Select value={formData.destCode || ''} onValueChange={(value) => setFormData({ ...formData, destCode: value })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select destination" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {DEST_CODES.map((dest) => (
+                      <SelectItem key={dest.code} value={dest.code}>
+                        {dest.code} - {dest.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
             <div className="grid gap-2">
               <Label htmlFor="priority">Priority</Label>
               <Select value={formData.priority.toString()} onValueChange={(value) => setFormData({ ...formData, priority: parseInt(value) })}>
@@ -133,25 +162,18 @@ export function OrderDialog({ open, onOpenChange, order, onSave }: OrderDialogPr
             </div>
             <div className="grid gap-2">
               <Label htmlFor="mode">Transport Mode</Label>
-              <Select value={formData.mode} onValueChange={(value) => setFormData({ ...formData, mode: value })}>
+              <Select value={formData.mode} onValueChange={(value) => setFormData({ ...formData, mode: value, destCode: value === 'road' ? undefined : formData.destCode })}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="rail">Rail</SelectItem>
-                  <SelectItem value="road">Road</SelectItem>
+                  <SelectItem value="road">Road (Truck)</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="destination">Destination</Label>
-              <Input
-                id="destination"
-                value={formData.destination}
-                onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
-                placeholder="e.g., Mumbai Port"
-                required
-              />
+              {formData.mode === 'road' && (
+                <p className="text-xs text-muted-foreground">Road orders go via truck - no railway destination code needed</p>
+              )}
             </div>
             <div className="grid gap-2">
               <Label htmlFor="deadline">Deadline</Label>

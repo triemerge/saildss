@@ -8,8 +8,8 @@ import { Switch } from '@/components/ui/switch';
 
 interface Rake {
   id: string;
+  wagons: number;
   capacity: number;
-  currentLoad: number;
   type: string;
   available: boolean;
   location: string;
@@ -19,14 +19,14 @@ interface RakeDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   rake?: Rake;
-  onSave: (rake: Rake) => void;
+  onSave: (rake: Rake) => void | Promise<void>;
 }
 
 export function RakeDialog({ open, onOpenChange, rake, onSave }: RakeDialogProps) {
   const [formData, setFormData] = useState<Rake>({
     id: '',
-    capacity: 0,
-    currentLoad: 0,
+    wagons: 43,
+    capacity: 2752,
     type: 'BOXN',
     available: true,
     location: '',
@@ -38,14 +38,23 @@ export function RakeDialog({ open, onOpenChange, rake, onSave }: RakeDialogProps
     } else {
       setFormData({
         id: '',
-        capacity: 0,
-        currentLoad: 0,
+        wagons: 43,
+        capacity: 2752,
         type: 'BOXN',
         available: true,
         location: '',
       });
     }
   }, [rake, open]);
+
+  // Auto-calculate capacity when wagons change (43 wagons * 64 tons = 2752)
+  const handleWagonsChange = (wagons: number) => {
+    setFormData({ 
+      ...formData, 
+      wagons, 
+      capacity: wagons * 64 
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,35 +93,34 @@ export function RakeDialog({ open, onOpenChange, rake, onSave }: RakeDialogProps
                 <SelectContent>
                   <SelectItem value="BOXN">BOXN - Box Wagon</SelectItem>
                   <SelectItem value="BCN">BCN - Bogie Covered Wagon</SelectItem>
+                  <SelectItem value="BCNHL">BCNHL - High Capacity</SelectItem>
                   <SelectItem value="BOST">BOST - Open Wagon</SelectItem>
-                  <SelectItem value="BRN">BRN - Bogie Wagon</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="capacity">Capacity (tons)</Label>
+              <Label htmlFor="wagons">Number of Wagons</Label>
+              <Input
+                id="wagons"
+                type="number"
+                value={formData.wagons}
+                onChange={(e) => handleWagonsChange(parseInt(e.target.value) || 0)}
+                min="1"
+                max="43"
+                required
+              />
+              <p className="text-xs text-muted-foreground">Max 43 wagons per rake</p>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="capacity">Total Capacity (tons)</Label>
               <Input
                 id="capacity"
                 type="number"
                 value={formData.capacity}
-                onChange={(e) => setFormData({ ...formData, capacity: parseFloat(e.target.value) })}
-                min="0"
-                step="0.1"
-                required
+                disabled
+                className="bg-muted"
               />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="currentLoad">Current Load (tons)</Label>
-              <Input
-                id="currentLoad"
-                type="number"
-                value={formData.currentLoad}
-                onChange={(e) => setFormData({ ...formData, currentLoad: parseFloat(e.target.value) })}
-                min="0"
-                step="0.1"
-                max={formData.capacity}
-                required
-              />
+              <p className="text-xs text-muted-foreground">Auto-calculated: {formData.wagons} wagons × 64 tons = {formData.capacity} tons</p>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="location">Location</Label>
@@ -120,7 +128,7 @@ export function RakeDialog({ open, onOpenChange, rake, onSave }: RakeDialogProps
                 id="location"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                placeholder="e.g., BSP Yard"
+                placeholder="e.g., BSP Yard 1"
                 required
               />
             </div>

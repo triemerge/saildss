@@ -10,14 +10,13 @@ interface Stockyard {
   location: string;
   material: string;
   quantity: number;
-  costPerTon: number;
 }
 
 interface StockyardDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   stockyard?: Stockyard;
-  onSave: (stockyard: Stockyard) => void;
+  onSave: (stockyard: Stockyard) => void | Promise<void>;
 }
 
 export function StockyardDialog({ open, onOpenChange, stockyard, onSave }: StockyardDialogProps) {
@@ -26,7 +25,6 @@ export function StockyardDialog({ open, onOpenChange, stockyard, onSave }: Stock
     location: '',
     material: 'Steel Coils',
     quantity: 0,
-    costPerTon: 0,
   });
 
   useEffect(() => {
@@ -38,7 +36,6 @@ export function StockyardDialog({ open, onOpenChange, stockyard, onSave }: Stock
         location: '',
         material: 'Steel Coils',
         quantity: 0,
-        costPerTon: 0,
       });
     }
   }, [stockyard, open]);
@@ -92,8 +89,7 @@ export function StockyardDialog({ open, onOpenChange, stockyard, onSave }: Stock
                   <SelectItem value="Steel Plates">Steel Plates</SelectItem>
                   <SelectItem value="TMT Bars">TMT Bars</SelectItem>
                   <SelectItem value="Wire Rods">Wire Rods</SelectItem>
-                  <SelectItem value="Rails">Rails</SelectItem>
-                  <SelectItem value="Pig Iron">Pig Iron</SelectItem>
+                  <SelectItem value="Steel Billets">Steel Billets</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -104,18 +100,6 @@ export function StockyardDialog({ open, onOpenChange, stockyard, onSave }: Stock
                 type="number"
                 value={formData.quantity}
                 onChange={(e) => setFormData({ ...formData, quantity: parseFloat(e.target.value) })}
-                min="0"
-                step="0.1"
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="costPerTon">Cost per Ton (₹)</Label>
-              <Input
-                id="costPerTon"
-                type="number"
-                value={formData.costPerTon}
-                onChange={(e) => setFormData({ ...formData, costPerTon: parseFloat(e.target.value) })}
                 min="0"
                 step="1"
                 required
