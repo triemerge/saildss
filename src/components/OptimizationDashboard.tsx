@@ -145,7 +145,7 @@ export function OptimizationDashboard() {
                 </h1>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1 flex items-center gap-2">
                   <span className="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                  AI/ML Decision Support System - BSP to CMO/Customers
+                  Decision Support System - BSP to CMO/Customers
                 </p>
               </div>
             </div>
@@ -615,7 +615,7 @@ export function OptimizationDashboard() {
                       </p>
                       <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
                         <Zap className="h-4 w-4" />
-                        <span>AI-powered optimization engine ready</span>
+                        <span>Optimization engine ready</span>
                       </div>
                     </CardContent>
                   </Card>
