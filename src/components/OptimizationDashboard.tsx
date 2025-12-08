@@ -1,3 +1,4 @@
+// src/components/OptimizationDashboard.tsx
 import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -12,6 +13,7 @@ import { OrderDialog } from './OrderDialog';
 import { RakeDialog } from './RakeDialog';
 import { Zap, Train, TrendingUp, Play, Loader2, Database, Plus, Package, Users, Truck, Edit3, Trash2, RefreshCw } from 'lucide-react';
 import { formatIndianNumber } from '@/lib/indian-formatter';
+import ProfileMenu from "@/components/ProfileMenu";
 import { useOptimizationData } from '@/hooks/useOptimizationData';
 import {
   AlertDialog,
@@ -149,6 +151,7 @@ export function OptimizationDashboard() {
                 </p>
               </div>
             </div>
+            {/* RIGHT SIDE: Refresh, Live, ProfileMenu */}
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" onClick={refetch} className="hover-lift shadow-md">
                 <RefreshCw className="h-4 w-4 mr-1" />
@@ -158,12 +161,15 @@ export function OptimizationDashboard() {
                 <Zap className="h-3 sm:h-4 w-3 sm:w-4 mr-1 text-green-600" />
                 <span className="text-xs sm:text-sm font-medium">Live</span>
               </Badge>
+
+              {/* Profile avatar + dropdown */}
+              <ProfileMenu />
             </div>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 max-w-full overflow-x-hidden">
+       <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 relative z-10 overflow-visible">
         <Tabs defaultValue="optimization" className="space-y-4 sm:space-y-6">
           <TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-muted/50 backdrop-blur-sm shadow-inner">
             <TabsTrigger value="optimization" className="text-xs sm:text-sm data-[state=active]:bg-gradient-to-br data-[state=active]:from-primary data-[state=active]:to-primary/80 data-[state=active]:text-primary-foreground transition-all duration-300 data-[state=active]:shadow-md">
@@ -178,8 +184,8 @@ export function OptimizationDashboard() {
 
           <TabsContent value="optimization" className="space-y-6">
             <div className="grid gap-6">
-              {/* Quick Actions */}
-                {/* Data Input Tabs */}
+              {/* Quick Actions */} 
+              {/* Data Input Tabs */}
               <Card className="shadow-lg border-border/50 bg-card/50 backdrop-blur-sm animate-slide-up" style={{animationDelay: '0.1s'}}>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-lg">
@@ -529,7 +535,7 @@ export function OptimizationDashboard() {
                 </div>
               </div>
 
-              {/* Results Section */}
+              {/* Results Section */} 
               <div ref={resultsRef}>
                 {isOptimizing ? (
                   <Card className="shadow-xl border-border/50 bg-gradient-to-br from-card to-primary/5 animate-slide-up">
@@ -576,7 +582,7 @@ export function OptimizationDashboard() {
                       </div>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                      {/* Key Metrics */}
+                      {/* Key Metrics */} 
                       <div className="grid grid-cols-2 gap-4">
                         <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20 shadow-md hover-lift animate-slide-up">
                           <CardContent className="p-6 text-center">
@@ -598,7 +604,7 @@ export function OptimizationDashboard() {
                         </Card>
                       </div>
 
-                      {/* Rake Plans Table */}
+                      {/* Rake Plans Table */} 
                       <PlanTable plans={optimizationResult.plan} />
                     </CardContent>
                   </Card>
