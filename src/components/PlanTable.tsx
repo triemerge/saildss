@@ -332,6 +332,9 @@ export function PlanTable({ plans }: PlanTableProps) {
                         <div className="text-[11px] text-muted-foreground mb-1">
                           Product: <span className="text-foreground font-medium">{isLoaded ? wagon.product : '—'}</span>
                         </div>
+                        <div className="text-[11px] text-muted-foreground mb-1">
+                          Order: <span className="text-foreground font-medium">{isLoaded ? wagon.orderId : '—'}</span>
+                        </div>
                         <div className="text-[11px] text-muted-foreground">Load: <span className="text-foreground font-semibold">{wagon.load}t</span> / 64t</div>
                         <div className="mt-1 h-2 rounded-full bg-secondary">
                           <div
