@@ -27,6 +27,10 @@ export interface WagonLoad {
   orderId: string;
   product: string;
   load: number;
+  source?: string;
+  destCode?: string;
+  customerName?: string;
+  wagonType?: string;
 }
 
 export interface InputData {
@@ -87,6 +91,22 @@ export class MockDataService {
 }
 
 export class OptimizationEngine {
+  private static readonly productWagonTypeMap = {
+    'Steel Coils': ['BOXN', 'BCN', 'BCNHL'],
+    'Steel Plates': ['BOXN', 'BCN'],
+    'TMT Bars': ['BOXN', 'BCNHL', 'BOST'],
+    'Wire Rods': ['BOXN', 'BCN'],
+    'Structural Steel': ['BOST', 'BFR'],
+    'Steel Billets': ['BOXN', 'BCN', 'BCNHL'],
+    'Pig Iron': ['BOXN', 'BCN'],
+    'Cold Rolled Coils': ['BOXN', 'BCNHL']
+  };
+
+  private static getWagonTypeForProduct(product: string): string {
+    const types = (this.productWagonTypeMap as any)[product] || ['BOXN'];
+    return types[0]; // return first compatible type
+  }
+
   static optimize(data: InputData) {
     // Create deep copies of input data to avoid mutation
     const workingStockyards = JSON.parse(JSON.stringify(data.stockyards)) as StockYard[];
@@ -172,7 +192,15 @@ export class OptimizationEngine {
             const stockAvailableAlt = stockyardInventory.get(stockAlt.id) || 0;
             const loadAlt = Math.max(0, Math.min(maxWagonWeight, remainingAlt, stockAvailableAlt));
             if (loadAlt <= 0) break;
-            rakeWagons.push({ orderId: altOrder.id, product: altOrder.product, load: loadAlt });
+            rakeWagons.push({ 
+              orderId: altOrder.id, 
+              product: altOrder.product, 
+              load: loadAlt,
+              source: stockAlt.id,
+              destCode,
+              customerName: altOrder.customer,
+              wagonType: this.getWagonTypeForProduct(altOrder.product)
+            });
             remainingByOrder.set(altOrder.id, remainingAlt - loadAlt);
             stockyardInventory.set(stockAlt.id, stockAvailableAlt - loadAlt);
             totalQuantity += loadAlt;
@@ -187,7 +215,15 @@ export class OptimizationEngine {
           const load = Math.max(0, Math.min(maxWagonWeight, remainingQty, stockAvailable));
           if (load <= 0) break;
 
-          rakeWagons.push({ orderId: nextOrder.id, product: nextOrder.product, load });
+          rakeWagons.push({ 
+            orderId: nextOrder.id, 
+            product: nextOrder.product, 
+            load,
+            source: stockyard.id,
+            destCode,
+            customerName: nextOrder.customer,
+            wagonType: this.getWagonTypeForProduct(nextOrder.product)
+          });
           remainingByOrder.set(nextOrder.id, remainingQty - load);
           stockyardInventory.set(stockyard.id, stockAvailable - load);
           totalQuantity += load;

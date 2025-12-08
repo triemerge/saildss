@@ -10,6 +10,10 @@ interface WagonLoad {
   orderId: string;
   product: string;
   load: number;
+  source?: string;
+  destCode?: string;
+  customerName?: string;
+  wagonType?: string;
 }
 
 interface Plan {
@@ -321,26 +325,38 @@ export function PlanTable({ plans }: PlanTableProps) {
                     return (
                       <div
                         key={wagonLabel}
-                        className={`w-full rounded-lg border p-3 shadow-sm transition-all duration-200 ${isLoaded ? 'bg-primary/10 border-primary/30' : 'bg-muted/50 border-border/70'}`}
+                        className="w-full rounded-lg border border-border shadow-sm overflow-hidden"
                       >
-                        <div className="flex items-center justify-between text-[11px] font-semibold text-foreground mb-1">
-                          <span>{wagonLabel}</span>
-                          <Badge variant={isLoaded ? 'default' : 'outline'} className="text-[10px] px-2 py-0.5">
-                            {isLoaded ? 'Loaded' : 'Empty'}
-                          </Badge>
+                        {/* Header Section - Wagon Type & ID */}
+                        <div className={`px-3 py-2 ${isLoaded ? 'bg-blue-600 text-white' : 'bg-slate-300 text-slate-700'}`}>
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-[10px] font-semibold">WT</span>
+                            <span className="text-[10px] font-semibold">{isLoaded ? wagon.wagonType : '—'}</span>
+                          </div>
+                          <div className="text-[11px] font-semibold">{wagonLabel}</div>
+                          <div className="text-[10px] opacity-90">{wagon.load}t / 64t</div>
                         </div>
-                        <div className="text-[11px] text-muted-foreground mb-1">
-                          Product: <span className="text-foreground font-medium">{isLoaded ? wagon.product : '—'}</span>
+
+                        {/* Route Section - Src → Dst (Highlighted Box) */}
+                        <div className={`px-3 py-2 ${isLoaded ? 'bg-indigo-50 border-t border-indigo-100' : 'bg-slate-50 border-t border-slate-100'}`}>
+                          <div className="flex items-center justify-between text-[11px]">
+                            <span className="font-semibold text-foreground">{isLoaded ? wagon.source : '—'}</span>
+                            <span className="text-muted-foreground">→</span>
+                            <span className="font-semibold text-foreground text-right">{isLoaded ? `${wagon.customerName}` : '—'}</span>
+                          </div>
+                          <div className="text-[10px] text-muted-foreground text-center mt-0.5">
+                            {isLoaded ? `(${wagon.destCode})` : ''}
+                          </div>
                         </div>
-                        <div className="text-[11px] text-muted-foreground mb-1">
-                          Order: <span className="text-foreground font-medium">{isLoaded ? wagon.orderId : '—'}</span>
-                        </div>
-                        <div className="text-[11px] text-muted-foreground">Load: <span className="text-foreground font-semibold">{wagon.load}t</span> / 64t</div>
-                        <div className="mt-1 h-2 rounded-full bg-secondary">
-                          <div
-                            className={`h-2 rounded-full ${isLoaded ? 'bg-success' : 'bg-muted-foreground/30'}`}
-                            style={{ width: `${Math.min((wagon.load / 64) * 100, 100)}%` }}
-                          ></div>
+
+                        {/* Details Section - Order ID & Product */}
+                        <div className="px-3 py-2 bg-white border-t border-border">
+                          <div className="text-[11px] text-muted-foreground mb-1">
+                            Ord: <span className="text-foreground font-semibold">{isLoaded ? wagon.orderId : '—'}</span>
+                          </div>
+                          <div className="text-[11px] text-muted-foreground">
+                            Prod: <span className="text-foreground font-semibold">{isLoaded ? wagon.product : '—'}</span>
+                          </div>
                         </div>
                       </div>
                     );
