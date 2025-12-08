@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Train, Clock, TrendingUp, List, Eye } from 'lucide-react';
 import { TrainVisualization } from './TrainVisualization';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+interface WagonLoad {
+  orderId: string;
+  product: string;
+  load: number;
+}
 
 interface Plan {
   rakeId: string;
@@ -15,6 +22,7 @@ interface Plan {
   wagonsUsed: number;
   totalWagons: number;
   utilization: number;
+  wagons: WagonLoad[];
   status: string;
 }
 
@@ -24,6 +32,8 @@ interface PlanTableProps {
 
 export function PlanTable({ plans }: PlanTableProps) {
   const [viewMode, setViewMode] = useState<'normal' | 'visual'>('normal');
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedPlanIndex, setSelectedPlanIndex] = useState<number | null>(null);
   
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -33,6 +43,40 @@ export function PlanTable({ plans }: PlanTableProps) {
       default: return 'bg-secondary text-secondary-foreground';
     }
   };
+
+  const selectedPlan = useMemo(() => {
+    if (selectedPlanIndex === null) return null;
+    return plans[selectedPlanIndex] || null;
+  }, [plans, selectedPlanIndex]);
+
+  const getRakeSequence = (plan: Plan | null, fallbackIndex: number) => {
+    if (!plan) return fallbackIndex + 1;
+    const match = plan.rakeId?.match(/(\d+)/);
+    return match ? parseInt(match[1], 10) || fallbackIndex + 1 : fallbackIndex + 1;
+  };
+
+  const getDisplayRakeId = (plan: Plan, index: number) => {
+    return plan.rakeId || `Rake-${index + 1}`;
+  };
+
+  const openPlanDialog = (index: number) => {
+    setSelectedPlanIndex(index);
+    setDialogOpen(true);
+  };
+
+  const normalizeWagons = (plan: Plan | null) => {
+    const totalWagons = 43;
+    if (!plan) return new Array(totalWagons).fill({ orderId: '', product: '', load: 0 });
+    const wagons: WagonLoad[] = plan.wagons || [];
+    const padded = [...wagons];
+    while (padded.length < totalWagons) {
+      padded.push({ orderId: '', product: '', load: 0 });
+    }
+    return padded.slice(0, totalWagons);
+  };
+
+  const selectedWagons = useMemo(() => normalizeWagons(selectedPlan), [selectedPlan]);
+  const selectedRakeSeq = useMemo(() => getRakeSequence(selectedPlan, selectedPlanIndex ?? 0), [selectedPlan, selectedPlanIndex]);
 
   return (
     <div className="w-full max-w-full overflow-x-hidden space-y-6">
@@ -61,9 +105,13 @@ export function PlanTable({ plans }: PlanTableProps) {
         <div className="space-y-4 animate-slide-up">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {plans.map((plan, index) => {
-              const displayRakeId = plan.rakeId || `Rake-${index + 1}`;
+              const displayRakeId = getDisplayRakeId(plan, index);
               return (
-                <div key={index} className="p-4 border border-border/50 rounded-lg bg-card/50 backdrop-blur-sm shadow-md hover:shadow-lg transition-shadow">
+                <div
+                  key={index}
+                  className="p-4 border border-border/50 rounded-lg bg-card/50 backdrop-blur-sm shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+                  onClick={() => openPlanDialog(index)}
+                >
                   <TrainVisualization 
                     wagonsUsed={plan.wagonsUsed}
                     totalWagons={plan.totalWagons}
@@ -104,9 +152,13 @@ export function PlanTable({ plans }: PlanTableProps) {
           {/* Mobile Card Layout */}
           <div className="block sm:hidden space-y-4">
             {plans.map((plan, index) => {
-              const displayRakeId = plan.rakeId || `Rake-${index + 1}`;
+              const displayRakeId = getDisplayRakeId(plan, index);
               return (
-                <div key={index} className="p-4 border border-border rounded-lg bg-card hover-lift">
+                <div 
+                  key={index} 
+                  className="p-4 border border-border rounded-lg bg-card hover-lift cursor-pointer"
+                  onClick={() => openPlanDialog(index)}
+                >
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <Train className="h-4 w-4 text-primary" />
@@ -168,9 +220,9 @@ export function PlanTable({ plans }: PlanTableProps) {
                 </TableHeader>
                 <TableBody>
                   {plans.map((plan, index) => {
-                    const displayRakeId = plan.rakeId || `Rake-${index + 1}`;
+                    const displayRakeId = getDisplayRakeId(plan, index);
                     return (
-                      <TableRow key={index} className="hover:bg-muted/50 transition-colors">
+                      <TableRow key={index} className="hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => openPlanDialog(index)}>
                         <TableCell className="font-medium text-primary text-xs sm:text-sm">
                           <div className="flex items-center gap-2">
                             <Train className="h-4 w-4" />
@@ -232,6 +284,70 @@ export function PlanTable({ plans }: PlanTableProps) {
           </div>
         </div>
       )}
+
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-w-5xl w-[95vw] max-h-[80vh] overflow-hidden p-0">
+          <div className="px-6 pt-6 pb-2">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Train className="h-5 w-5 text-primary" />
+                {selectedPlan ? getDisplayRakeId(selectedPlan, selectedPlanIndex ?? 0) : 'Rake Detail'}
+              </DialogTitle>
+              {selectedPlan && (
+                <DialogDescription className="text-xs sm:text-sm space-y-1">
+                  <div className="flex flex-wrap gap-3 text-muted-foreground">
+                    <span><span className="font-semibold text-foreground">Orders:</span> {selectedPlan.orderIds.join(', ')}</span>
+                    <span><span className="font-semibold text-foreground">Product:</span> {selectedPlan.material}</span>
+                    <span><span className="font-semibold text-foreground">Dest:</span> {selectedPlan.destCode}</span>
+                    <span><span className="font-semibold text-foreground">Total Qty:</span> {selectedPlan.totalQuantity} tons</span>
+                  </div>
+                </DialogDescription>
+              )}
+            </DialogHeader>
+          </div>
+
+          {selectedPlan && (
+            <div className="px-6 pb-6 space-y-3 overflow-y-auto max-h-[64vh]">
+              <div className="text-xs text-muted-foreground flex items-center gap-3">
+                <Badge variant="outline" className="text-[11px]">43 Wagons</Badge>
+                <span>Max per wagon: 64 tons</span>
+                <span>Wagons loaded: {selectedPlan.wagonsUsed}/{selectedPlan.totalWagons}</span>
+              </div>
+              <div className="w-full pb-3">
+                <div className="grid grid-cols-[repeat(auto-fill,minmax(170px,1fr))] gap-3 min-h-[260px] pr-2">
+                  {selectedWagons.map((wagon, wagonIndex) => {
+                    const wagonLabel = `WR${selectedRakeSeq}-${String(wagonIndex + 1).padStart(2, '0')}`;
+                    const isLoaded = wagon.load > 0;
+                    return (
+                      <div
+                        key={wagonLabel}
+                        className={`w-full rounded-lg border p-3 shadow-sm transition-all duration-200 ${isLoaded ? 'bg-primary/10 border-primary/30' : 'bg-muted/50 border-border/70'}`}
+                      >
+                        <div className="flex items-center justify-between text-[11px] font-semibold text-foreground mb-1">
+                          <span>{wagonLabel}</span>
+                          <Badge variant={isLoaded ? 'default' : 'outline'} className="text-[10px] px-2 py-0.5">
+                            {isLoaded ? 'Loaded' : 'Empty'}
+                          </Badge>
+                        </div>
+                        <div className="text-[11px] text-muted-foreground mb-1">
+                          Product: <span className="text-foreground font-medium">{isLoaded ? wagon.product : '—'}</span>
+                        </div>
+                        <div className="text-[11px] text-muted-foreground">Load: <span className="text-foreground font-semibold">{wagon.load}t</span> / 64t</div>
+                        <div className="mt-1 h-2 rounded-full bg-secondary">
+                          <div
+                            className={`h-2 rounded-full ${isLoaded ? 'bg-success' : 'bg-muted-foreground/30'}`}
+                            style={{ width: `${Math.min((wagon.load / 64) * 100, 100)}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

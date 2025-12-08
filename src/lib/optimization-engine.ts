@@ -23,6 +23,12 @@ export interface Constraints {
   maxWagonWeight: number; // tons per wagon
 }
 
+export interface WagonLoad {
+  orderId: string;
+  product: string;
+  load: number;
+}
+
 export interface InputData {
   stockyards: StockYard[];
   orders: Order[];
@@ -39,6 +45,7 @@ export interface RakePlan {
   wagonsUsed: number;
   totalWagons: number;
   utilization: number;
+  wagons: WagonLoad[];
   status: string;
 }
 
@@ -91,10 +98,10 @@ export class OptimizationEngine {
     // Filter only rail orders that have a valid destCode (required for rail)
     const railOrders = workingOrders.filter(o => o.mode === 'rail' && o.destCode);
 
-    // Group orders by material AND destination code for clubbing
+    // Group orders by destination code (allow multiple products per rake)
     const orderGroups = new Map<string, Order[]>();
     for (const order of railOrders) {
-      const key = `${order.product}|${order.destCode}`;
+      const key = `${order.destCode}`;
       if (!orderGroups.has(key)) {
         orderGroups.set(key, []);
       }
@@ -124,56 +131,95 @@ export class OptimizationEngine {
 
     // Process each order group (material + destination)
     for (const [key, orders] of orderGroups) {
-      const [material, destCode] = key.split('|');
+      const destCode = key;
 
-      // Find stockyards with matching material
-      const compatibleStockyards = workingStockyards.filter(s => 
-        s.material === material && (stockyardInventory.get(s.id) || 0) > 0
-      );
+      // Sort by priority then deadline
+      orders.sort((a, b) => {
+        if (a.priority !== b.priority) return a.priority - b.priority;
+        return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
+      });
 
-      if (compatibleStockyards.length === 0) continue;
+      // Track remaining per order
+      const remainingByOrder = new Map<string, number>();
+      orders.forEach(o => remainingByOrder.set(o.id, o.quantity));
 
-      // Calculate total quantity needed for this group
-      let remainingQuantity = orders.reduce((sum, o) => sum + o.quantity, 0);
-      const orderIds = orders.map(o => o.id);
+      // Keep forming rakes until all orders in this destination are allocated or stock depletes
+      while (orders.some(o => (remainingByOrder.get(o.id) || 0) > 0)) {
+        const rakeWagons: WagonLoad[] = [];
+        let totalQuantity = 0;
+        const usedOrders = new Set<string>();
+        const usedMaterials = new Set<string>();
+        const usedStockyards = new Set<string>();
 
-      // Fill rakes until all quantity is allocated
-      while (remainingQuantity > 0) {
-        // Find stockyard with available material for this product
-        const stockyard = compatibleStockyards.find(s => 
-          (stockyardInventory.get(s.id) || 0) > 0
-        );
+        for (let w = 0; w < maxWagonsPerRake; w++) {
+          // Pick next order with remaining qty
+          const nextOrder = orders.find(o => (remainingByOrder.get(o.id) || 0) > 0);
+          if (!nextOrder) break;
 
-        if (!stockyard) break;
+          // Find stockyard with matching material and stock
+          const stockyard = workingStockyards.find(s => 
+            s.material === nextOrder.product && (stockyardInventory.get(s.id) || 0) > 0
+          );
 
-        const availableStock = stockyardInventory.get(stockyard.id) || 0;
-        if (availableStock <= 0) break;
+          if (!stockyard) {
+            // No stock for this product; skip this order and try another
+            const altOrder = orders.find(o => o.id !== nextOrder.id && (remainingByOrder.get(o.id) || 0) > 0 && workingStockyards.some(s => s.material === o.product && (stockyardInventory.get(s.id) || 0) > 0));
+            if (!altOrder) break;
+            // use alternate order
+            const remainingAlt = remainingByOrder.get(altOrder.id) || 0;
+            const stockAlt = workingStockyards.find(s => s.material === altOrder.product && (stockyardInventory.get(s.id) || 0) > 0);
+            if (!stockAlt) break;
+            const stockAvailableAlt = stockyardInventory.get(stockAlt.id) || 0;
+            const loadAlt = Math.max(0, Math.min(maxWagonWeight, remainingAlt, stockAvailableAlt));
+            if (loadAlt <= 0) break;
+            rakeWagons.push({ orderId: altOrder.id, product: altOrder.product, load: loadAlt });
+            remainingByOrder.set(altOrder.id, remainingAlt - loadAlt);
+            stockyardInventory.set(stockAlt.id, stockAvailableAlt - loadAlt);
+            totalQuantity += loadAlt;
+            usedOrders.add(altOrder.id);
+            usedMaterials.add(altOrder.product);
+            usedStockyards.add(stockAlt.id);
+            continue;
+          }
 
-        // Calculate how much to load on this dynamically formed rake
-        const quantityToLoad = Math.min(remainingQuantity, rakeCapacity, availableStock);
-        
-        // Calculate wagons used based on quantity loaded
-        const wagonsUsed = Math.ceil(quantityToLoad / maxWagonWeight);
-        const utilization = Math.round((quantityToLoad / rakeCapacity) * 100);
+          const remainingQty = remainingByOrder.get(nextOrder.id) || 0;
+          const stockAvailable = stockyardInventory.get(stockyard.id) || 0;
+          const load = Math.max(0, Math.min(maxWagonWeight, remainingQty, stockAvailable));
+          if (load <= 0) break;
+
+          rakeWagons.push({ orderId: nextOrder.id, product: nextOrder.product, load });
+          remainingByOrder.set(nextOrder.id, remainingQty - load);
+          stockyardInventory.set(stockyard.id, stockAvailable - load);
+          totalQuantity += load;
+          usedOrders.add(nextOrder.id);
+          usedMaterials.add(nextOrder.product);
+          usedStockyards.add(stockyard.id);
+        }
+
+        if (rakeWagons.length === 0) {
+          // No allocation possible; exit to avoid infinite loop
+          break;
+        }
+
+        const wagonsUsed = rakeWagons.length;
+        const utilization = Math.round((totalQuantity / rakeCapacity) * 100);
         const rakeId = `Rake-${rakeCounter}`;
 
         plans.push({
           rakeId,
-          orderIds: [...orderIds],
-          source: stockyard.id,
-          destCode: destCode,
-          material: material,
-          totalQuantity: quantityToLoad,
-          wagonsUsed: wagonsUsed,
+          orderIds: Array.from(usedOrders),
+          source: usedStockyards.size === 1 ? Array.from(usedStockyards)[0] : 'Multiple Stockyards',
+          destCode,
+          material: usedMaterials.size === 1 ? Array.from(usedMaterials)[0] : 'Mixed',
+          totalQuantity,
+          wagonsUsed,
           totalWagons: maxWagonsPerRake,
-          utilization: utilization,
+          utilization,
+          wagons: rakeWagons,
           status: 'Optimized'
         });
 
-        // Update tracking
         rakeCounter += 1;
-        stockyardInventory.set(stockyard.id, availableStock - quantityToLoad);
-        remainingQuantity -= quantityToLoad;
       }
     }
 
