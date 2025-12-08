@@ -88,10 +88,18 @@ export function OptimizationDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
-          <p className="text-muted-foreground">Loading data...</p>
+          <div className="relative inline-block mb-6">
+            <div className="absolute inset-0 bg-primary/30 blur-2xl rounded-full animate-pulse"></div>
+            <Loader2 className="h-12 w-12 animate-spin mx-auto text-primary relative" />
+          </div>
+          <p className="text-muted-foreground text-lg">Loading data...</p>
+          <div className="mt-4 flex items-center justify-center gap-2">
+            <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+          </div>
         </div>
       </div>
     );
@@ -99,11 +107,18 @@ export function OptimizationDashboard() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <Card className="max-w-md">
-          <CardContent className="p-6 text-center">
-            <p className="text-destructive mb-4">Error loading data: {error}</p>
-            <Button onClick={refetch}>Retry</Button>
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4">
+        <Card className="max-w-md shadow-xl border-destructive/20 bg-gradient-to-br from-card to-destructive/5">
+          <CardContent className="p-8 text-center">
+            <div className="mx-auto w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center mb-4">
+              <span className="text-3xl">⚠️</span>
+            </div>
+            <h3 className="text-lg font-semibold mb-2">Error Loading Data</h3>
+            <p className="text-destructive mb-6">{error}</p>
+            <Button onClick={refetch} className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary hover:to-primary/90">
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Try Again
+            </Button>
           </CardContent>
         </Card>
       </div>
@@ -111,26 +126,37 @@ export function OptimizationDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 overflow-x-hidden">
       {/* Header */}
-      <header className="border-b border-border bg-card shadow-card">
-        <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
+      <header className="relative border-b border-border/50 bg-gradient-to-r from-primary/5 via-primary/10 to-accent/5 shadow-lg backdrop-blur-sm">
+        <div className="absolute inset-0 bg-grid-white/[0.02] pointer-events-none"></div>
+        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 relative z-10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
-            <div className="flex items-center gap-2 sm:gap-3">
-              <Train className="h-6 sm:h-8 w-6 sm:w-8 text-primary" />
+            <div className="flex items-center gap-2 sm:gap-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full"></div>
+                <div className="relative bg-gradient-to-br from-primary to-primary/80 p-2 sm:p-3 rounded-xl shadow-lg">
+                  <Train className="h-6 sm:h-8 w-6 sm:w-8 text-primary-foreground" />
+                </div>
+              </div>
               <div>
-                <h1 className="text-lg sm:text-2xl font-bold text-foreground">SAIL Rake Optimization DSS</h1>
-                <p className="text-xs sm:text-sm text-muted-foreground">AI/ML Decision Support System - BSP to CMO/Customers</p>
+                <h1 className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-primary via-primary/80 to-accent bg-clip-text text-transparent">
+                  SAIL Rake Optimization DSS
+                </h1>
+                <p className="text-xs sm:text-sm text-muted-foreground mt-1 flex items-center gap-2">
+                  <span className="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                  AI/ML Decision Support System - BSP to CMO/Customers
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" onClick={refetch}>
+              <Button variant="outline" size="sm" onClick={refetch} className="hover-lift shadow-md">
                 <RefreshCw className="h-4 w-4 mr-1" />
                 Refresh
               </Button>
-              <Badge variant="secondary" className="px-2 sm:px-3 py-1">
-                <Zap className="h-3 sm:h-4 w-3 sm:w-4 mr-1" />
-                <span className="text-xs sm:text-sm">Live</span>
+              <Badge variant="secondary" className="px-2 sm:px-3 py-1.5 bg-gradient-to-r from-green-500/10 to-green-600/10 border-green-500/20">
+                <Zap className="h-3 sm:h-4 w-3 sm:w-4 mr-1 text-green-600" />
+                <span className="text-xs sm:text-sm font-medium">Live</span>
               </Badge>
             </div>
           </div>
@@ -139,48 +165,51 @@ export function OptimizationDashboard() {
 
       <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 max-w-full overflow-x-hidden">
         <Tabs defaultValue="optimization" className="space-y-4 sm:space-y-6">
-          <TabsList className="grid w-full grid-cols-2 h-auto">
-            <TabsTrigger value="optimization" className="text-xs sm:text-sm">Optimization Engine</TabsTrigger>
-            <TabsTrigger value="matrix" className="text-xs sm:text-sm">Product Matrix</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-muted/50 backdrop-blur-sm shadow-inner">
+            <TabsTrigger value="optimization" className="text-xs sm:text-sm data-[state=active]:bg-gradient-to-br data-[state=active]:from-primary data-[state=active]:to-primary/80 data-[state=active]:text-primary-foreground transition-all duration-300 data-[state=active]:shadow-md">
+              <Zap className="h-4 w-4 mr-2" />
+              Optimization Engine
+            </TabsTrigger>
+            <TabsTrigger value="matrix" className="text-xs sm:text-sm data-[state=active]:bg-gradient-to-br data-[state=active]:from-primary data-[state=active]:to-primary/80 data-[state=active]:text-primary-foreground transition-all duration-300 data-[state=active]:shadow-md">
+              <Database className="h-4 w-4 mr-2" />
+              Product Matrix
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="optimization" className="space-y-6">
             <div className="grid gap-6">
               {/* Quick Actions */}
-              <div className="grid grid-cols-1 gap-4 max-w-md">
-                <Button onClick={handleOptimize} disabled={isOptimizing || !data} className="h-20 flex-col">
-                  {isOptimizing ? (
-                    <>
-                      <Loader2 className="h-6 w-6 animate-spin mb-2" />
-                      Optimizing...
-                    </>
-                  ) : (
-                    <>
-                      <Play className="h-6 w-6 mb-2" />
-                      Run Optimization
-                    </>
-                  )}
-                </Button>
-              </div>
-
-              {/* Data Input Tabs */}
-              <Card>
+                {/* Data Input Tabs */}
+              <Card className="shadow-lg border-border/50 bg-card/50 backdrop-blur-sm animate-slide-up" style={{animationDelay: '0.1s'}}>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Database className="h-5 w-5" />
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <div className="p-2 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5">
+                      <Database className="h-5 w-5 text-primary" />
+                    </div>
                     Input Data Management
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-sm">
                     Add, edit, or delete stockyards, orders, rakes, and constraints. Data is stored in the backend.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Tabs defaultValue="stockyards" className="w-full">
-                    <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto gap-1">
-                      <TabsTrigger value="stockyards" className="text-xs sm:text-sm px-2">Stockyards</TabsTrigger>
-                      <TabsTrigger value="orders" className="text-xs sm:text-sm px-2">Orders</TabsTrigger>
-                      <TabsTrigger value="rakes" className="text-xs sm:text-sm px-2">Rakes</TabsTrigger>
-                      <TabsTrigger value="constraints" className="text-xs sm:text-sm px-2">Constraints</TabsTrigger>
+                    <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto gap-2 bg-muted/30 p-2 rounded-xl">
+                      <TabsTrigger value="stockyards" className="text-xs sm:text-sm px-3 py-2 rounded-md shadow-sm hover:shadow-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200">
+                        <Package className="h-3 w-3 mr-1" />
+                        Stockyards
+                      </TabsTrigger>
+                      <TabsTrigger value="orders" className="text-xs sm:text-sm px-3 py-2 rounded-md shadow-sm hover:shadow-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200">
+                        <Users className="h-3 w-3 mr-1" />
+                        Orders
+                      </TabsTrigger>
+                      <TabsTrigger value="rakes" className="text-xs sm:text-sm px-3 py-2 rounded-md shadow-sm hover:shadow-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200">
+                        <Train className="h-3 w-3 mr-1" />
+                        Rakes
+                      </TabsTrigger>
+                      <TabsTrigger value="constraints" className="text-xs sm:text-sm px-3 py-2 rounded-md shadow-sm hover:shadow-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200">
+                        Constraints
+                      </TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="stockyards">
@@ -190,14 +219,14 @@ export function OptimizationDashboard() {
                             <Package className="h-5 w-5 text-primary" />
                             Stockyard Inventory ({data?.stockyards?.length || 0} Plants)
                           </h3>
-                          <Button size="sm" variant="outline" onClick={() => setStockyardDialog({ open: true })}>
+                          <Button size="sm" variant="outline" onClick={() => setStockyardDialog({ open: true })} className="hover-lift shadow-sm hover:shadow-md transition-all duration-200 hover:border-primary/50">
                             <Plus className="h-4 w-4 mr-1" />
                             Add Stockyard
                           </Button>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {data?.stockyards?.map((stockyard) => (
-                            <Card key={stockyard.id} className="hover:shadow-md transition-shadow">
+                          {data?.stockyards?.map((stockyard, idx) => (
+                            <Card key={stockyard.id} className="hover-lift card-shine shadow-md border-border/50 bg-gradient-to-br from-card to-card/80 animate-slide-up" style={{animationDelay: `${idx * 0.05}s`}}>
                               <CardContent className="p-4">
                                 <div className="flex justify-between items-start mb-3">
                                   <div className="flex-1">
@@ -223,10 +252,10 @@ export function OptimizationDashboard() {
                                     </Button>
                                   </div>
                                 </div>
-                                <div className="space-y-2">
+                                  <div className="space-y-2">
                                   <div className="flex justify-between">
                                     <span className="text-xs text-muted-foreground">Material:</span>
-                                    <Badge variant="secondary" className="text-xs">{stockyard.material}</Badge>
+                                    <Badge variant="secondary" className="text-xs bg-gradient-to-r from-secondary to-secondary/80">{stockyard.material}</Badge>
                                   </div>
                                   <div className="flex justify-between">
                                     <span className="text-xs text-muted-foreground">Quantity:</span>
@@ -247,14 +276,14 @@ export function OptimizationDashboard() {
                             <Users className="h-5 w-5 text-primary" />
                             Customer Orders ({data?.orders?.length || 0} Orders)
                           </h3>
-                          <Button size="sm" variant="outline" onClick={() => setOrderDialog({ open: true })}>
+                          <Button size="sm" variant="outline" onClick={() => setOrderDialog({ open: true })} className="hover-lift shadow-sm hover:shadow-md transition-all duration-200 hover:border-primary/50">
                             <Plus className="h-4 w-4 mr-1" />
                             Add Order
                           </Button>
                         </div>
                         <div className="grid grid-cols-1 gap-4">
-                          {data?.orders?.map((order) => (
-                            <Card key={order.id} className="hover:shadow-md transition-shadow">
+                          {data?.orders?.map((order, idx) => (
+                            <Card key={order.id} className="hover-lift card-shine shadow-md border-border/50 bg-gradient-to-br from-card to-card/80 animate-slide-up" style={{animationDelay: `${idx * 0.05}s`}}>
                               <CardContent className="p-4">
                                 <div className="flex justify-between items-start mb-3">
                                   <div className="flex-1">
@@ -262,7 +291,7 @@ export function OptimizationDashboard() {
                                     <p className="text-xs text-muted-foreground">{order.customer}</p>
                                   </div>
                                   <div className="flex gap-1">
-                                    <Badge variant={order.priority === 1 ? "destructive" : order.priority === 2 ? "default" : "secondary"} className="text-xs">
+                                    <Badge variant={order.priority === 1 ? "destructive" : order.priority === 2 ? "default" : "secondary"} className="text-xs shadow-sm">
                                       P{order.priority}
                                     </Badge>
                                     <Button 
@@ -300,7 +329,7 @@ export function OptimizationDashboard() {
                                   )}
                                   <div className="flex justify-between">
                                     <span className="text-xs text-muted-foreground">Mode:</span>
-                                    <Badge variant={order.mode === 'rail' ? 'default' : 'outline'} className="text-xs">
+                                    <Badge variant={order.mode === 'rail' ? 'default' : 'outline'} className="text-xs shadow-sm">
                                       {order.mode === 'rail' ? <Train className="h-3 w-3 mr-1" /> : <Truck className="h-3 w-3 mr-1" />}
                                       {order.mode.toUpperCase()}
                                     </Badge>
@@ -324,14 +353,14 @@ export function OptimizationDashboard() {
                             <Train className="h-5 w-5 text-primary" />
                             Available Rakes ({data?.rakes?.filter((r) => r.available).length || 0}/{data?.rakes?.length || 0} Available)
                           </h3>
-                          <Button size="sm" variant="outline" onClick={() => setRakeDialog({ open: true })}>
+                          <Button size="sm" variant="outline" onClick={() => setRakeDialog({ open: true })} className="hover-lift shadow-sm hover:shadow-md transition-all duration-200 hover:border-primary/50">
                             <Plus className="h-4 w-4 mr-1" />
                             Add Rake
                           </Button>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {data?.rakes?.map((rake) => (
-                            <Card key={rake.id} className={`hover:shadow-md transition-shadow ${!rake.available ? 'opacity-60' : ''}`}>
+                          {data?.rakes?.map((rake, idx) => (
+                            <Card key={rake.id} className={`hover-lift card-shine shadow-md border-border/50 bg-gradient-to-br from-card to-card/80 animate-slide-up ${!rake.available ? 'opacity-60' : ''}`} style={{animationDelay: `${idx * 0.05}s`}}>
                               <CardContent className="p-4">
                                 <div className="flex justify-between items-start mb-3">
                                   <div className="flex-1">
@@ -339,7 +368,7 @@ export function OptimizationDashboard() {
                                     <p className="text-xs text-muted-foreground">{rake.location}</p>
                                   </div>
                                   <div className="flex gap-1">
-                                    <Badge variant={rake.available ? "default" : "secondary"} className="text-xs">
+                                    <Badge variant={rake.available ? "default" : "secondary"} className="text-xs shadow-sm">
                                       {rake.available ? "Available" : "In Use"}
                                     </Badge>
                                     <Button 
@@ -412,13 +441,47 @@ export function OptimizationDashboard() {
                 </CardContent>
               </Card>
 
+              {/* Run Optimization CTA (placed after data readiness) */}
+              <div className="animate-slide-up" style={{animationDelay: '0.2s'}}>
+                <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] items-center gap-4 lg:gap-6 rounded-2xl bg-gradient-to-r from-primary/10 via-primary/5 to-accent/10 border border-primary/15 shadow-xl p-6 lg:p-8">
+                  <div className="space-y-2">
+                    <p className="text-sm uppercase tracking-wide text-primary font-semibold">Ready to optimize</p>
+                    <h3 className="text-2xl lg:text-3xl font-bold text-foreground leading-tight">Generate optimal rake plans with current inputs</h3>
+                    <p className="text-sm text-muted-foreground max-w-2xl">We will combine stockyards, orders, rakes, and constraints to build the best formation plan. Works great on wide screens with extra room for insights.</p>
+                  </div>
+                  <div className="flex lg:justify-end">
+                    <Button 
+                      onClick={handleOptimize} 
+                      disabled={isOptimizing || !data} 
+                      className="h-16 w-full lg:w-auto px-6 lg:px-8 text-base font-semibold relative overflow-hidden group bg-gradient-to-br from-primary to-primary/80 hover:from-primary hover:to-primary/90 shadow-lg hover:shadow-xl transition-all duration-300"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                      {isOptimizing ? (
+                        <span className="flex items-center gap-2">
+                          <Loader2 className="h-5 w-5 animate-spin" />
+                          Optimizing...
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-2">
+                          <Play className="h-5 w-5" />
+                          Run Optimization
+                        </span>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
               {/* Results Section */}
               <div ref={resultsRef}>
                 {isOptimizing ? (
-                  <Card>
+                  <Card className="shadow-xl border-border/50 bg-gradient-to-br from-card to-primary/5 animate-slide-up">
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
-                        <Loader2 className="h-5 w-5 animate-spin" />
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-primary/20 blur-lg rounded-full"></div>
+                          <Loader2 className="h-5 w-5 animate-spin text-primary relative" />
+                        </div>
                         Running Optimization
                       </CardTitle>
                       <CardDescription>
@@ -428,37 +491,52 @@ export function OptimizationDashboard() {
                     <CardContent>
                       <div className="space-y-4">
                         <div className="grid grid-cols-2 gap-4">
-                          <Skeleton className="h-24 rounded-lg" />
-                          <Skeleton className="h-24 rounded-lg" />
+                          <Skeleton className="h-24 rounded-lg animate-pulse" />
+                          <Skeleton className="h-24 rounded-lg animate-pulse" style={{animationDelay: '0.1s'}} />
                         </div>
-                        <Skeleton className="h-64 rounded-lg" />
+                        <Skeleton className="h-64 rounded-lg animate-pulse" style={{animationDelay: '0.2s'}} />
                       </div>
                     </CardContent>
                   </Card>
                 ) : optimizationResult ? (
-                  <Card>
+                  <Card className="shadow-xl border-border/50 bg-gradient-to-br from-card to-success/5 animate-slide-up">
                     <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <TrendingUp className="h-5 w-5 text-primary" />
-                        Optimization Results
-                      </CardTitle>
-                      <CardDescription>
-                        Generated {optimizationResult.plan.length} rake plans
-                      </CardDescription>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <CardTitle className="flex items-center gap-2">
+                            <div className="p-2 rounded-lg bg-gradient-to-br from-success/20 to-success/10">
+                              <TrendingUp className="h-5 w-5 text-success" />
+                            </div>
+                            Optimization Results
+                          </CardTitle>
+                          <CardDescription className="mt-1">
+                            Generated {optimizationResult.plan.length} rake plans with {optimizationResult.utilization}% average utilization
+                          </CardDescription>
+                        </div>
+                        <Badge className="bg-gradient-to-r from-success to-success/80 text-success-foreground px-4 py-2 text-sm shadow-lg">
+                          Success
+                        </Badge>
+                      </div>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       {/* Key Metrics */}
                       <div className="grid grid-cols-2 gap-4">
-                        <Card className="bg-muted/50">
-                          <CardContent className="p-4 text-center">
-                            <p className="text-2xl font-bold text-primary">{optimizationResult.plan.length}</p>
-                            <p className="text-sm text-muted-foreground">Plans Generated</p>
+                        <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20 shadow-md hover-lift animate-slide-up">
+                          <CardContent className="p-6 text-center">
+                            <div className="relative inline-block">
+                              <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full"></div>
+                              <p className="text-4xl font-bold text-primary relative">{optimizationResult.plan.length}</p>
+                            </div>
+                            <p className="text-sm text-muted-foreground mt-2 font-medium">Plans Generated</p>
                           </CardContent>
                         </Card>
-                        <Card className="bg-muted/50">
-                          <CardContent className="p-4 text-center">
-                            <p className="text-2xl font-bold text-primary">{optimizationResult.utilization}%</p>
-                            <p className="text-sm text-muted-foreground">Avg Rake Utilization</p>
+                        <Card className="bg-gradient-to-br from-success/10 to-success/5 border-success/20 shadow-md hover-lift animate-slide-up" style={{animationDelay: '0.1s'}}>
+                          <CardContent className="p-6 text-center">
+                            <div className="relative inline-block">
+                              <div className="absolute inset-0 bg-success/20 blur-xl rounded-full"></div>
+                              <p className="text-4xl font-bold text-success relative">{optimizationResult.utilization}%</p>
+                            </div>
+                            <p className="text-sm text-muted-foreground mt-2 font-medium">Avg Rake Utilization</p>
                           </CardContent>
                         </Card>
                       </div>
@@ -468,13 +546,20 @@ export function OptimizationDashboard() {
                     </CardContent>
                   </Card>
                 ) : (
-                  <Card className="border-dashed">
-                    <CardContent className="p-8 text-center">
-                      <Train className="h-12 w-12 mx-auto mb-4 text-muted-foreground/50" />
-                      <h3 className="text-lg font-medium mb-2">No Results Yet</h3>
-                      <p className="text-muted-foreground mb-4">
-                        Click "Run Optimization" to generate rake formation plans
+                  <Card className="border-dashed border-2 shadow-md bg-gradient-to-br from-card to-muted/20 animate-slide-up">
+                    <CardContent className="p-12 text-center">
+                      <div className="relative inline-block animate-float">
+                        <div className="absolute inset-0 bg-primary/10 blur-2xl rounded-full"></div>
+                        <Train className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50 relative" />
+                      </div>
+                      <h3 className="text-xl font-semibold mb-2">No Results Yet</h3>
+                      <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                        Click "Run Optimization" to generate intelligent rake formation plans based on your current data
                       </p>
+                      <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                        <Zap className="h-4 w-4" />
+                        <span>AI-powered optimization engine ready</span>
+                      </div>
                     </CardContent>
                   </Card>
                 )}
