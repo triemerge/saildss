@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client"; // <- matches Profile
 import { Card, CardContent } from "@/components/ui/card"; // optional, adjust if not used
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import Login from "Login";
+
 
 export default function Profile() {
   const [email, setEmail] = useState<string | null>(null);
@@ -16,12 +16,6 @@ export default function Profile() {
       const { data } = await supabase.auth.getUser();
       const user = data.user;
       setEmail(user?.email ?? null);
-
-      if (user?.id) {
-        // try to fetch profile row (if you have a "profiles" table)
-        const res = await supabase.from("profiles").select("*").eq("id", user.id).single();
-        if (!res.error) setProfile(res.data);
-      }
     })();
   }, []);
 
