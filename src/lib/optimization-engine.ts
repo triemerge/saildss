@@ -18,15 +18,6 @@ export interface Order {
   destCode?: string; // Required for rail, not needed for road
 }
 
-export interface Rake {
-  id: string;
-  wagons: number;
-  capacity: number; // total capacity in tons
-  type: string;
-  available: boolean;
-  location: string;
-}
-
 export interface Constraints {
   maxWagonsPerRake: number;
   maxWagonWeight: number; // tons per wagon
@@ -35,7 +26,6 @@ export interface Constraints {
 export interface InputData {
   stockyards: StockYard[];
   orders: Order[];
-  rakes: Rake[];
   constraints: Constraints;
 }
 
@@ -81,18 +71,6 @@ export class MockDataService {
         { id: 'ORD-011', customer: 'L&T Construction Kolkata', quantity: 900, priority: 3, deadline: '2025-10-01', mode: 'road', product: 'Wire Rods' },
         { id: 'ORD-012', customer: 'CMO Pune', quantity: 1500, priority: 2, deadline: '2025-09-29', mode: 'rail', product: 'Steel Plates', destCode: 'PUN' }
       ],
-      rakes: [
-        { id: 'RAKE-001', wagons: 43, capacity: 2752, type: 'BOXN', available: true, location: 'BSP Yard 1' },
-        { id: 'RAKE-002', wagons: 43, capacity: 2752, type: 'BCN', available: true, location: 'BSP Yard 1' },
-        { id: 'RAKE-003', wagons: 43, capacity: 2752, type: 'BOXN', available: true, location: 'BSP Yard 2' },
-        { id: 'RAKE-004', wagons: 43, capacity: 2752, type: 'BCNHL', available: true, location: 'BSP Yard 2' },
-        { id: 'RAKE-005', wagons: 43, capacity: 2752, type: 'BOXN', available: true, location: 'BSP Yard 3' },
-        { id: 'RAKE-006', wagons: 43, capacity: 2752, type: 'BCN', available: true, location: 'RSP Yard 1' },
-        { id: 'RAKE-007', wagons: 43, capacity: 2752, type: 'BOXN', available: true, location: 'RSP Yard 1' },
-        { id: 'RAKE-008', wagons: 43, capacity: 2752, type: 'BCN', available: true, location: 'BSL Yard 1' },
-        { id: 'RAKE-009', wagons: 43, capacity: 2752, type: 'BOXN', available: true, location: 'BSL Yard 1' },
-        { id: 'RAKE-010', wagons: 43, capacity: 2752, type: 'BCN', available: true, location: 'DSP Yard 1' }
-      ],
       constraints: {
         maxWagonsPerRake: 43,
         maxWagonWeight: 64
@@ -106,7 +84,6 @@ export class OptimizationEngine {
     // Create deep copies of input data to avoid mutation
     const workingStockyards = JSON.parse(JSON.stringify(data.stockyards)) as StockYard[];
     const workingOrders = JSON.parse(JSON.stringify(data.orders)) as Order[];
-    const workingRakes = JSON.parse(JSON.stringify(data.rakes)) as Rake[];
     const constraints = { ...data.constraints };
 
     console.log('Running Rake Formation Optimization...');
@@ -137,12 +114,13 @@ export class OptimizationEngine {
       workingStockyards.map(s => [s.id, s.quantity])
     );
 
-    // Track used rakes
-    const usedRakes = new Set<string>();
     const plans: RakePlan[] = [];
+    let rakeCounter = 1;
 
-    // Calculate rake capacity
-    const rakeCapacity = constraints.maxWagonsPerRake * constraints.maxWagonWeight; // 43 * 64 = 2752 tons
+    // Calculate rake capacity (no predefined rakes; use constraints directly)
+    const maxWagonsPerRake = constraints.maxWagonsPerRake || 43;
+    const maxWagonWeight = constraints.maxWagonWeight || 64;
+    const rakeCapacity = maxWagonsPerRake * maxWagonWeight;
 
     // Process each order group (material + destination)
     for (const [key, orders] of orderGroups) {
@@ -161,14 +139,7 @@ export class OptimizationEngine {
 
       // Fill rakes until all quantity is allocated
       while (remainingQuantity > 0) {
-        // Find available rake
-        const availableRake = workingRakes.find(r => 
-          r.available && !usedRakes.has(r.id)
-        );
-
-        if (!availableRake) break;
-
-        // Find stockyard with enough material
+        // Find stockyard with available material for this product
         const stockyard = compatibleStockyards.find(s => 
           (stockyardInventory.get(s.id) || 0) > 0
         );
@@ -176,29 +147,31 @@ export class OptimizationEngine {
         if (!stockyard) break;
 
         const availableStock = stockyardInventory.get(stockyard.id) || 0;
+        if (availableStock <= 0) break;
 
-        // Calculate how much to load on this rake
+        // Calculate how much to load on this dynamically formed rake
         const quantityToLoad = Math.min(remainingQuantity, rakeCapacity, availableStock);
         
         // Calculate wagons used based on quantity loaded
-        const wagonsUsed = Math.ceil(quantityToLoad / constraints.maxWagonWeight);
+        const wagonsUsed = Math.ceil(quantityToLoad / maxWagonWeight);
         const utilization = Math.round((quantityToLoad / rakeCapacity) * 100);
+        const rakeId = `Rake-${rakeCounter}`;
 
         plans.push({
-          rakeId: availableRake.id,
+          rakeId,
           orderIds: [...orderIds],
           source: stockyard.id,
           destCode: destCode,
           material: material,
           totalQuantity: quantityToLoad,
           wagonsUsed: wagonsUsed,
-          totalWagons: availableRake.wagons,
+          totalWagons: maxWagonsPerRake,
           utilization: utilization,
           status: 'Optimized'
         });
 
         // Update tracking
-        usedRakes.add(availableRake.id);
+        rakeCounter += 1;
         stockyardInventory.set(stockyard.id, availableStock - quantityToLoad);
         remainingQuantity -= quantityToLoad;
       }

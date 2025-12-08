@@ -20,15 +20,6 @@ export interface Order {
   destCode?: string;
 }
 
-export interface Rake {
-  id: string;
-  wagons: number;
-  capacity: number;
-  type: string;
-  available: boolean;
-  location: string;
-}
-
 export interface Constraints {
   maxWagonsPerRake: number;
   maxWagonWeight: number;
@@ -37,7 +28,6 @@ export interface Constraints {
 export interface OptimizationData {
   stockyards: StockYard[];
   orders: Order[];
-  rakes: Rake[];
   constraints: Constraints;
 }
 
@@ -51,15 +41,13 @@ export function useOptimizationData() {
     setError(null);
     
     try {
-      const [stockyardsRes, ordersRes, rakesRes] = await Promise.all([
+      const [stockyardsRes, ordersRes] = await Promise.all([
         supabase.from('stockyards').select('*'),
-        supabase.from('orders').select('*'),
-        supabase.from('rakes').select('*')
+        supabase.from('orders').select('*')
       ]);
 
       if (stockyardsRes.error) throw stockyardsRes.error;
       if (ordersRes.error) throw ordersRes.error;
-      if (rakesRes.error) throw rakesRes.error;
 
       // Transform database format to app format
       const stockyards: StockYard[] = stockyardsRes.data.map(s => ({
@@ -80,19 +68,9 @@ export function useOptimizationData() {
         destCode: o.dest_code || undefined
       }));
 
-      const rakes: Rake[] = rakesRes.data.map(r => ({
-        id: r.id,
-        wagons: r.wagons,
-        capacity: r.capacity,
-        type: r.type,
-        available: r.available,
-        location: r.location
-      }));
-
       setData({
         stockyards,
         orders,
-        rakes,
         constraints: {
           maxWagonsPerRake: 43,
           maxWagonWeight: 64
@@ -181,41 +159,6 @@ export function useOptimizationData() {
     }
   };
 
-  // Rake operations
-  const saveRake = async (rake: Rake) => {
-    try {
-      const { error } = await supabase
-        .from('rakes')
-        .upsert({
-          id: rake.id,
-          wagons: rake.wagons,
-          capacity: rake.capacity,
-          type: rake.type,
-          available: rake.available,
-          location: rake.location
-        });
-      
-      if (error) throw error;
-      await fetchData();
-      toast.success('Rake saved');
-    } catch (err: any) {
-      console.error('Error saving rake:', err);
-      toast.error('Failed to save rake');
-    }
-  };
-
-  const deleteRake = async (id: string) => {
-    try {
-      const { error } = await supabase.from('rakes').delete().eq('id', id);
-      if (error) throw error;
-      await fetchData();
-      toast.success('Rake deleted');
-    } catch (err: any) {
-      console.error('Error deleting rake:', err);
-      toast.error('Failed to delete rake');
-    }
-  };
-
   return {
     data,
     loading,
@@ -224,8 +167,6 @@ export function useOptimizationData() {
     saveStockyard,
     deleteStockyard,
     saveOrder,
-    deleteOrder,
-    saveRake,
-    deleteRake
+    deleteOrder
   };
 }

@@ -10,7 +10,6 @@ import { MatrixTable } from './MatrixTable';
 import { Skeleton } from '@/components/ui/skeleton';
 import { StockyardDialog } from './StockyardDialog';
 import { OrderDialog } from './OrderDialog';
-import { RakeDialog } from './RakeDialog';
 import { Zap, Train, TrendingUp, Play, Loader2, Database, Plus, Package, Users, Truck, Edit3, Trash2, RefreshCw } from 'lucide-react';
 import { formatIndianNumber } from '@/lib/indian-formatter';
 import ProfileMenu from "@/components/ProfileMenu";
@@ -40,9 +39,7 @@ export function OptimizationDashboard() {
     saveStockyard,
     deleteStockyard,
     saveOrder,
-    deleteOrder,
-    saveRake,
-    deleteRake
+    deleteOrder
   } = useOptimizationData();
   
   const [optimizationResult, setOptimizationResult] = useState<OptimizationResult | null>(null);
@@ -52,7 +49,6 @@ export function OptimizationDashboard() {
   // Dialog states
   const [stockyardDialog, setStockyardDialog] = useState<{ open: boolean; stockyard?: any }>({ open: false });
   const [orderDialog, setOrderDialog] = useState<{ open: boolean; order?: any }>({ open: false });
-  const [rakeDialog, setRakeDialog] = useState<{ open: boolean; rake?: any }>({ open: false });
   const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; type: string; id: string }>({ open: false, type: '', id: '' });
 
   const handleOptimize = async () => {
@@ -80,9 +76,6 @@ export function OptimizationDashboard() {
         break;
       case 'order':
         await deleteOrder(deleteDialog.id);
-        break;
-      case 'rake':
-        await deleteRake(deleteDialog.id);
         break;
     }
     setDeleteDialog({ open: false, type: '', id: '' });
@@ -195,12 +188,12 @@ export function OptimizationDashboard() {
                     Input Data Management
                   </CardTitle>
                   <CardDescription className="text-sm">
-                    Add, edit, or delete stockyards, orders, rakes, and constraints. Data is stored in the backend.
+                    Add, edit, or delete stockyards, orders, and constraints. Data is stored in the backend.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Tabs defaultValue="stockyards" className="w-full">
-                    <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto gap-2 bg-muted/30 p-2 rounded-xl">
+                    <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 h-auto gap-2 bg-muted/30 p-2 rounded-xl">
                       <TabsTrigger value="stockyards" className="text-xs sm:text-sm px-3 py-2 rounded-md shadow-sm hover:shadow-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200">
                         <Package className="h-3 w-3 mr-1" />
                         Stockyards
@@ -208,10 +201,6 @@ export function OptimizationDashboard() {
                       <TabsTrigger value="orders" className="text-xs sm:text-sm px-3 py-2 rounded-md shadow-sm hover:shadow-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200">
                         <Users className="h-3 w-3 mr-1" />
                         Orders
-                      </TabsTrigger>
-                      <TabsTrigger value="rakes" className="text-xs sm:text-sm px-3 py-2 rounded-md shadow-sm hover:shadow-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200">
-                        <Train className="h-3 w-3 mr-1" />
-                        Rakes
                       </TabsTrigger>
                       <TabsTrigger value="constraints" className="text-xs sm:text-sm px-3 py-2 rounded-md shadow-sm hover:shadow-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200">
                         Constraints
@@ -258,7 +247,7 @@ export function OptimizationDashboard() {
                                     </Button>
                                   </div>
                                 </div>
-                                  <div className="space-y-2">
+                                <div className="space-y-2">
                                   <div className="flex justify-between">
                                     <span className="text-xs text-muted-foreground">Material:</span>
                                     <Badge variant="secondary" className="text-xs bg-gradient-to-r from-secondary to-secondary/80">{stockyard.material}</Badge>
@@ -348,70 +337,6 @@ export function OptimizationDashboard() {
                       </div>
                     </TabsContent>
 
-                    <TabsContent value="rakes">
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <h3 className="text-lg font-medium flex items-center gap-2">
-                            <Train className="h-5 w-5 text-primary" />
-                            Available Rakes ({data?.rakes?.filter((r) => r.available).length || 0}/{data?.rakes?.length || 0} Available)
-                          </h3>
-                          <Button size="sm" variant="outline" onClick={() => setRakeDialog({ open: true })} className="hover-lift shadow-sm hover:shadow-md transition-all duration-200 hover:border-primary/50">
-                            <Plus className="h-4 w-4 mr-1" />
-                            Add Rake
-                          </Button>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {data?.rakes?.map((rake, idx) => (
-                            <Card key={rake.id} className={`hover-lift card-shine shadow-md border-border/50 bg-gradient-to-br from-card to-card/80 animate-slide-up ${!rake.available ? 'opacity-60' : ''}`} style={{animationDelay: `${idx * 0.05}s`}}>
-                              <CardContent className="p-4">
-                                <div className="flex justify-between items-start mb-3">
-                                  <div className="flex-1">
-                                    <h4 className="font-semibold text-sm">{rake.id}</h4>
-                                    <p className="text-xs text-muted-foreground">{rake.location}</p>
-                                  </div>
-                                  <div className="flex gap-1">
-                                    <Badge variant={rake.available ? "default" : "secondary"} className="text-xs shadow-sm">
-                                      {rake.available ? "Available" : "In Use"}
-                                    </Badge>
-                                    <Button 
-                                      size="sm" 
-                                      variant="ghost" 
-                                      className="h-8 w-8 p-0"
-                                      onClick={() => setRakeDialog({ open: true, rake })}
-                                    >
-                                      <Edit3 className="h-3 w-3" />
-                                    </Button>
-                                    <Button 
-                                      size="sm" 
-                                      variant="ghost" 
-                                      className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                                      onClick={() => setDeleteDialog({ open: true, type: 'rake', id: rake.id })}
-                                    >
-                                      <Trash2 className="h-3 w-3" />
-                                    </Button>
-                                  </div>
-                                </div>
-                                <div className="space-y-2">
-                                  <div className="flex justify-between">
-                                    <span className="text-xs text-muted-foreground">Type:</span>
-                                    <Badge variant="outline" className="text-xs">{rake.type}</Badge>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="text-xs text-muted-foreground">Wagons:</span>
-                                    <span className="text-xs font-medium">{rake.wagons} wagons</span>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="text-xs text-muted-foreground">Capacity:</span>
-                                    <span className="text-xs font-medium">{formatIndianNumber(rake.capacity)} tons</span>
-                                  </div>
-                                </div>
-                              </CardContent>
-                            </Card>
-                          ))}
-                        </div>
-                      </div>
-                    </TabsContent>
-
                     <TabsContent value="constraints">
                       <div className="space-y-4">
                         <h3 className="text-lg font-medium">Rake Constraints</h3>
@@ -476,7 +401,7 @@ export function OptimizationDashboard() {
                     <div className="space-y-4">
                       <p className="text-sm uppercase tracking-wide text-primary font-semibold">Ready to optimize</p>
                       <h3 className="text-2xl lg:text-3xl font-bold text-foreground leading-tight">Generate optimal rake plans with current inputs</h3>
-                      <p className="text-sm text-muted-foreground max-w-xl">We will combine stockyards, orders, rakes, and constraints to build the best formation plan.</p>
+                      <p className="text-sm text-muted-foreground max-w-xl">We will combine stockyards, orders, and constraints to build the best formation plan.</p>
                       
                       <Button 
                         onClick={handleOptimize} 
@@ -648,12 +573,6 @@ export function OptimizationDashboard() {
         onOpenChange={(open) => setOrderDialog({ open })}
         order={orderDialog.order}
         onSave={saveOrder}
-      />
-      <RakeDialog
-        open={rakeDialog.open}
-        onOpenChange={(open) => setRakeDialog({ open })}
-        rake={rakeDialog.rake}
-        onSave={saveRake}
       />
 
       {/* Delete Confirmation Dialog */}

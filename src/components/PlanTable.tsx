@@ -60,37 +60,40 @@ export function PlanTable({ plans }: PlanTableProps) {
       {viewMode === 'visual' && (
         <div className="space-y-4 animate-slide-up">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {plans.map((plan, index) => (
-              <div key={index} className="p-4 border border-border/50 rounded-lg bg-card/50 backdrop-blur-sm shadow-md hover:shadow-lg transition-shadow">
-                <TrainVisualization 
-                  wagonsUsed={plan.wagonsUsed}
-                  totalWagons={plan.totalWagons}
-                  rakeId={plan.rakeId}
-                />
-                <div className="mt-4 space-y-1 text-xs border-t border-border/30 pt-3">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Orders:</span>
-                    <span className="font-medium">{plan.orderIds.join(', ')}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Material:</span>
-                    <span className="font-medium">{plan.material}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Quantity:</span>
-                    <span className="font-medium">{plan.totalQuantity} tons</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Destination:</span>
-                    <Badge variant="outline" className="text-xs">{plan.destCode}</Badge>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Status:</span>
-                    <Badge className={`${getStatusColor(plan.status)} text-xs`}>{plan.status}</Badge>
+            {plans.map((plan, index) => {
+              const displayRakeId = plan.rakeId || `Rake-${index + 1}`;
+              return (
+                <div key={index} className="p-4 border border-border/50 rounded-lg bg-card/50 backdrop-blur-sm shadow-md hover:shadow-lg transition-shadow">
+                  <TrainVisualization 
+                    wagonsUsed={plan.wagonsUsed}
+                    totalWagons={plan.totalWagons}
+                    rakeId={displayRakeId}
+                  />
+                  <div className="mt-4 space-y-1 text-xs border-t border-border/30 pt-3">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Orders:</span>
+                      <span className="font-medium">{plan.orderIds.join(', ')}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Material:</span>
+                      <span className="font-medium">{plan.material}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Quantity:</span>
+                      <span className="font-medium">{plan.totalQuantity} tons</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Destination:</span>
+                      <Badge variant="outline" className="text-xs">{plan.destCode}</Badge>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Status:</span>
+                      <Badge className={`${getStatusColor(plan.status)} text-xs`}>{plan.status}</Badge>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
@@ -100,47 +103,50 @@ export function PlanTable({ plans }: PlanTableProps) {
         <div className="animate-slide-up">
           {/* Mobile Card Layout */}
           <div className="block sm:hidden space-y-4">
-            {plans.map((plan, index) => (
-              <div key={index} className="p-4 border border-border rounded-lg bg-card hover-lift">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <Train className="h-4 w-4 text-primary" />
-                    <span className="font-semibold text-primary text-sm">{plan.rakeId}</span>
-                  </div>
-                  <Badge className="text-xs">{plan.destCode}</Badge>
-                </div>
-                <div className="space-y-2 text-xs">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Orders:</span>
-                    <span className="font-medium">{plan.orderIds.join(', ')}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Material:</span>
-                    <span className="font-medium">{plan.material}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Quantity:</span>
-                    <span className="font-medium">{plan.totalQuantity} tons</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Wagons:</span>
-                    <span className="font-medium">{plan.wagonsUsed}/{plan.totalWagons}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Utilization:</span>
+            {plans.map((plan, index) => {
+              const displayRakeId = plan.rakeId || `Rake-${index + 1}`;
+              return (
+                <div key={index} className="p-4 border border-border rounded-lg bg-card hover-lift">
+                  <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <div className="w-16 bg-secondary rounded-full h-2">
-                        <div 
-                          className="bg-success h-2 rounded-full transition-all duration-300" 
-                          style={{ width: `${Math.min(plan.utilization, 100)}%` }}
-                        />
+                      <Train className="h-4 w-4 text-primary" />
+                      <span className="font-semibold text-primary text-sm">{displayRakeId}</span>
+                    </div>
+                    <Badge className="text-xs">{plan.destCode}</Badge>
+                  </div>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Orders:</span>
+                      <span className="font-medium">{plan.orderIds.join(', ')}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Material:</span>
+                      <span className="font-medium">{plan.material}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Quantity:</span>
+                      <span className="font-medium">{plan.totalQuantity} tons</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Wagons:</span>
+                      <span className="font-medium">{plan.wagonsUsed}/{plan.totalWagons}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Utilization:</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-16 bg-secondary rounded-full h-2">
+                          <div 
+                            className="bg-success h-2 rounded-full transition-all duration-300" 
+                            style={{ width: `${Math.min(plan.utilization, 100)}%` }}
+                          />
+                        </div>
+                        <span className="w-8 text-xs">{plan.utilization}%</span>
                       </div>
-                      <span className="w-8 text-xs">{plan.utilization}%</span>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Desktop Table Layout */}
@@ -161,40 +167,43 @@ export function PlanTable({ plans }: PlanTableProps) {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {plans.map((plan, index) => (
-                    <TableRow key={index} className="hover:bg-muted/50 transition-colors">
-                      <TableCell className="font-medium text-primary text-xs sm:text-sm">
-                        <div className="flex items-center gap-2">
-                          <Train className="h-4 w-4" />
-                          {plan.rakeId}
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-xs sm:text-sm">{plan.orderIds.join(', ')}</TableCell>
-                      <TableCell className="text-xs sm:text-sm">{plan.source}</TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className="text-xs">{plan.destCode}</Badge>
-                      </TableCell>
-                      <TableCell className="text-xs sm:text-sm">{plan.material}</TableCell>
-                      <TableCell className="text-xs sm:text-sm">{plan.totalQuantity} tons</TableCell>
-                      <TableCell className="text-xs sm:text-sm">{plan.wagonsUsed}/{plan.totalWagons}</TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <div className="flex-1 bg-secondary rounded-full h-2 min-w-[60px]">
-                            <div 
-                              className="bg-success h-2 rounded-full transition-all duration-300" 
-                              style={{ width: `${Math.min(plan.utilization, 100)}%` }}
-                            />
+                  {plans.map((plan, index) => {
+                    const displayRakeId = plan.rakeId || `Rake-${index + 1}`;
+                    return (
+                      <TableRow key={index} className="hover:bg-muted/50 transition-colors">
+                        <TableCell className="font-medium text-primary text-xs sm:text-sm">
+                          <div className="flex items-center gap-2">
+                            <Train className="h-4 w-4" />
+                            {displayRakeId}
                           </div>
-                          <span className="text-xs text-muted-foreground w-10">{plan.utilization}%</span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge className={`${getStatusColor(plan.status)} text-xs`}>
-                          {plan.status}
-                        </Badge>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                        </TableCell>
+                        <TableCell className="text-xs sm:text-sm">{plan.orderIds.join(', ')}</TableCell>
+                        <TableCell className="text-xs sm:text-sm">{plan.source}</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="text-xs">{plan.destCode}</Badge>
+                        </TableCell>
+                        <TableCell className="text-xs sm:text-sm">{plan.material}</TableCell>
+                        <TableCell className="text-xs sm:text-sm">{plan.totalQuantity} tons</TableCell>
+                        <TableCell className="text-xs sm:text-sm">{plan.wagonsUsed}/{plan.totalWagons}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <div className="flex-1 bg-secondary rounded-full h-2 min-w-[60px]">
+                              <div 
+                                className="bg-success h-2 rounded-full transition-all duration-300" 
+                                style={{ width: `${Math.min(plan.utilization, 100)}%` }}
+                              />
+                            </div>
+                            <span className="text-xs text-muted-foreground w-10">{plan.utilization}%</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge className={`${getStatusColor(plan.status)} text-xs`}>
+                            {plan.status}
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </div>
