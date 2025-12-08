@@ -281,16 +281,16 @@ export function OptimizationDashboard() {
                             Add Order
                           </Button>
                         </div>
-                        <div className="grid grid-cols-1 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                           {data?.orders?.map((order, idx) => (
                             <Card key={order.id} className="hover-lift card-shine shadow-md border-border/50 bg-gradient-to-br from-card to-card/80 animate-slide-up" style={{animationDelay: `${idx * 0.05}s`}}>
                               <CardContent className="p-4">
                                 <div className="flex justify-between items-start mb-3">
-                                  <div className="flex-1">
-                                    <h4 className="font-semibold text-sm">{order.id}</h4>
-                                    <p className="text-xs text-muted-foreground">{order.customer}</p>
+                                  <div className="flex-1 min-w-0">
+                                    <h4 className="font-semibold text-sm truncate">{order.id}</h4>
+                                    <p className="text-xs text-muted-foreground truncate">{order.customer}</p>
                                   </div>
-                                  <div className="flex gap-1">
+                                  <div className="flex gap-1 flex-shrink-0">
                                     <Badge variant={order.priority === 1 ? "destructive" : order.priority === 2 ? "default" : "secondary"} className="text-xs shadow-sm">
                                       P{order.priority}
                                     </Badge>
@@ -312,32 +312,28 @@ export function OptimizationDashboard() {
                                     </Button>
                                   </div>
                                 </div>
-                                <div className="space-y-2">
+                                <div className="space-y-1.5 text-xs">
                                   <div className="flex justify-between">
-                                    <span className="text-xs text-muted-foreground">Product:</span>
-                                    <span className="text-xs font-medium">{order.product}</span>
+                                    <span className="text-muted-foreground">Product:</span>
+                                    <span className="font-medium">{order.product}</span>
                                   </div>
                                   <div className="flex justify-between">
-                                    <span className="text-xs text-muted-foreground">Quantity:</span>
-                                    <span className="text-xs font-medium">{formatIndianNumber(order.quantity)} tons</span>
+                                    <span className="text-muted-foreground">Qty:</span>
+                                    <span className="font-medium">{formatIndianNumber(order.quantity)} tons</span>
                                   </div>
-                                  {order.mode === 'rail' && order.destCode && (
+                                  <div className="flex justify-between">
+                                    <span className="text-muted-foreground">Mode:</span>
+                                    <Badge variant={order.mode === 'rail' ? 'default' : 'outline'} className="text-xs h-5">
+                                      {order.mode === 'rail' ? <Train className="h-2.5 w-2.5 mr-0.5" /> : <Truck className="h-2.5 w-2.5 mr-0.5" />}
+                                      {order.mode === 'rail' ? 'Rail' : 'Road'}
+                                    </Badge>
+                                  </div>
+                                  {order.destCode && (
                                     <div className="flex justify-between">
-                                      <span className="text-xs text-muted-foreground">Dest Code:</span>
+                                      <span className="text-muted-foreground">Dest:</span>
                                       <Badge variant="outline" className="text-xs">{order.destCode}</Badge>
                                     </div>
                                   )}
-                                  <div className="flex justify-between">
-                                    <span className="text-xs text-muted-foreground">Mode:</span>
-                                    <Badge variant={order.mode === 'rail' ? 'default' : 'outline'} className="text-xs shadow-sm">
-                                      {order.mode === 'rail' ? <Train className="h-3 w-3 mr-1" /> : <Truck className="h-3 w-3 mr-1" />}
-                                      {order.mode.toUpperCase()}
-                                    </Badge>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="text-xs text-muted-foreground">Deadline:</span>
-                                    <span className="text-xs font-medium">{new Date(order.deadline).toLocaleDateString()}</span>
-                                  </div>
                                 </div>
                               </CardContent>
                             </Card>
