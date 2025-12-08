@@ -439,31 +439,92 @@ export function OptimizationDashboard() {
 
               {/* Run Optimization CTA (placed after data readiness) */}
               <div className="animate-slide-up" style={{animationDelay: '0.2s'}}>
-                <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] items-center gap-4 lg:gap-6 rounded-2xl bg-gradient-to-r from-primary/10 via-primary/5 to-accent/10 border border-primary/15 shadow-xl p-6 lg:p-8">
-                  <div className="space-y-2">
-                    <p className="text-sm uppercase tracking-wide text-primary font-semibold">Ready to optimize</p>
-                    <h3 className="text-2xl lg:text-3xl font-bold text-foreground leading-tight">Generate optimal rake plans with current inputs</h3>
-                    <p className="text-sm text-muted-foreground max-w-2xl">We will combine stockyards, orders, rakes, and constraints to build the best formation plan. Works great on wide screens with extra room for insights.</p>
+                <div className="rounded-2xl bg-gradient-to-r from-primary/5 via-primary/10 to-accent/5 border border-primary/20 shadow-xl p-6 lg:p-8 overflow-hidden relative">
+                  {/* SVG Train Graphics Background */}
+                  <div className="absolute right-0 top-1/2 transform -translate-y-1/2 opacity-20 pointer-events-none">
+                    <svg width="500" height="200" viewBox="0 0 500 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      {/* Locomotive */}
+                      <rect x="20" y="80" width="60" height="60" rx="5" fill="currentColor" className="text-primary/40"/>
+                      <circle cx="35" cy="140" r="10" fill="currentColor" className="text-primary/60"/>
+                      <circle cx="55" cy="140" r="10" fill="currentColor" className="text-primary/60"/>
+                      
+                      {/* Wagon 1 */}
+                      <rect x="85" y="90" width="50" height="50" rx="3" fill="currentColor" className="text-primary/30"/>
+                      <circle cx="95" cy="145" r="8" fill="currentColor" className="text-primary/50"/>
+                      <circle cx="120" cy="145" r="8" fill="currentColor" className="text-primary/50"/>
+                      
+                      {/* Wagon 2 */}
+                      <rect x="140" y="90" width="50" height="50" rx="3" fill="currentColor" className="text-primary/30"/>
+                      <circle cx="150" cy="145" r="8" fill="currentColor" className="text-primary/50"/>
+                      <circle cx="175" cy="145" r="8" fill="currentColor" className="text-primary/50"/>
+                      
+                      {/* Wagon 3 */}
+                      <rect x="195" y="90" width="50" height="50" rx="3" fill="currentColor" className="text-primary/30"/>
+                      <circle cx="205" cy="145" r="8" fill="currentColor" className="text-primary/50"/>
+                      <circle cx="230" cy="145" r="8" fill="currentColor" className="text-primary/50"/>
+                    </svg>
                   </div>
-                  <div className="flex lg:justify-end">
-                    <Button 
-                      onClick={handleOptimize} 
-                      disabled={isOptimizing || !data} 
-                      className="h-16 w-full lg:w-auto px-6 lg:px-8 text-base font-semibold relative overflow-hidden group bg-gradient-to-br from-primary to-primary/80 hover:from-primary hover:to-primary/90 shadow-lg hover:shadow-xl transition-all duration-300"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                      {isOptimizing ? (
-                        <span className="flex items-center gap-2">
-                          <Loader2 className="h-5 w-5 animate-spin" />
-                          Optimizing...
-                        </span>
-                      ) : (
-                        <span className="flex items-center gap-2">
-                          <Play className="h-5 w-5" />
-                          Run Optimization
-                        </span>
-                      )}
-                    </Button>
+
+                  {/* Content */}
+                  <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 relative z-10">
+                    <div className="space-y-4">
+                      <p className="text-sm uppercase tracking-wide text-primary font-semibold">Ready to optimize</p>
+                      <h3 className="text-2xl lg:text-3xl font-bold text-foreground leading-tight">Generate optimal rake plans with current inputs</h3>
+                      <p className="text-sm text-muted-foreground max-w-xl">We will combine stockyards, orders, rakes, and constraints to build the best formation plan.</p>
+                      
+                      <Button 
+                        onClick={handleOptimize} 
+                        disabled={isOptimizing || !data} 
+                        className="mt-4 h-12 px-8 text-base font-semibold relative overflow-hidden group bg-gradient-to-br from-primary to-primary/80 hover:from-primary hover:to-primary/90 shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                        {isOptimizing ? (
+                          <span className="flex items-center gap-2">
+                            <Loader2 className="h-5 w-5 animate-spin" />
+                            Optimizing...
+                          </span>
+                        ) : (
+                          <span className="flex items-center gap-2">
+                            <Play className="h-5 w-5" />
+                            Run Optimization
+                          </span>
+                        )}
+                      </Button>
+                    </div>
+
+                    {/* Train Graphic on right (visible on larger screens) */}
+                    <div className="hidden lg:flex items-center justify-end pr-4">
+                      <svg width="380" height="120" viewBox="0 0 380 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-float">
+                        {/* Locomotive */}
+                        <rect x="10" y="50" width="50" height="50" rx="4" fill="currentColor" className="text-primary/60" fillOpacity="0.8"/>
+                        <circle cx="22" cy="100" r="8" fill="currentColor" className="text-primary/80"/>
+                        <circle cx="38" cy="100" r="8" fill="currentColor" className="text-primary/80"/>
+                        
+                        {/* Wagon 1 */}
+                        <rect x="65" y="60" width="45" height="40" rx="3" fill="currentColor" className="text-primary/50" fillOpacity="0.7"/>
+                        <circle cx="74" cy="100" r="7" fill="currentColor" className="text-primary/70"/>
+                        <circle cx="96" cy="100" r="7" fill="currentColor" className="text-primary/70"/>
+                        
+                        {/* Wagon 2 */}
+                        <rect x="115" y="60" width="45" height="40" rx="3" fill="currentColor" className="text-primary/50" fillOpacity="0.7"/>
+                        <circle cx="124" cy="100" r="7" fill="currentColor" className="text-primary/70"/>
+                        <circle cx="146" cy="100" r="7" fill="currentColor" className="text-primary/70"/>
+                        
+                        {/* Wagon 3 */}
+                        <rect x="165" y="60" width="45" height="40" rx="3" fill="currentColor" className="text-primary/50" fillOpacity="0.7"/>
+                        <circle cx="174" cy="100" r="7" fill="currentColor" className="text-primary/70"/>
+                        <circle cx="196" cy="100" r="7" fill="currentColor" className="text-primary/70"/>
+                        
+                        {/* Wagon 4 */}
+                        <rect x="215" y="60" width="45" height="40" rx="3" fill="currentColor" className="text-primary/50" fillOpacity="0.7"/>
+                        <circle cx="224" cy="100" r="7" fill="currentColor" className="text-primary/70"/>
+                        <circle cx="246" cy="100" r="7" fill="currentColor" className="text-primary/70"/>
+                        
+                        {/* Track */}
+                        <line x1="10" y1="108" x2="350" y2="108" stroke="currentColor" strokeWidth="2" className="text-primary/30"/>
+                        <line x1="10" y1="113" x2="350" y2="113" stroke="currentColor" strokeWidth="2" className="text-primary/30"/>
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>
