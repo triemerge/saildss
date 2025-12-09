@@ -93,7 +93,7 @@ export class MockDataService {
 
 export class OptimizationEngine {
   private static readonly productWagonTypeMap = {
-    'Steel Coils': ['BOXN', 'BCN', 'BCNHL'],
+    'Steel Coils': ['BCN', 'BCNHL'],
     'Steel Plates': ['BOXN', 'BCN'],
     'TMT Bars': ['BOXN', 'BCNHL', 'BOST'],
     'Wire Rods': ['BOXN', 'BCN'],
