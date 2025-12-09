@@ -2,7 +2,8 @@ import { useMemo, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Train, Clock, TrendingUp, List, Eye } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Train, Clock, TrendingUp, List, Eye, Search } from 'lucide-react';
 import { TrainVisualization } from './TrainVisualization';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -14,6 +15,7 @@ interface WagonLoad {
   destCode?: string;
   customerName?: string;
   wagonType?: string;
+  deadline?: string;
 }
 
 interface Plan {
@@ -38,6 +40,19 @@ export function PlanTable({ plans }: PlanTableProps) {
   const [viewMode, setViewMode] = useState<'normal' | 'visual'>('normal');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredPlans = useMemo(() => {
+    if (!searchQuery.trim()) return plans;
+    const query = searchQuery.toLowerCase();
+    return plans.filter(plan => 
+      plan.rakeId?.toLowerCase().includes(query) ||
+      plan.destCode?.toLowerCase().includes(query) ||
+      plan.material?.toLowerCase().includes(query) ||
+      plan.orderIds?.some(orderId => orderId.toLowerCase().includes(query)) ||
+      plan.source?.toLowerCase().includes(query)
+    );
+  }, [plans, searchQuery]);
   
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -50,8 +65,8 @@ export function PlanTable({ plans }: PlanTableProps) {
 
   const selectedPlan = useMemo(() => {
     if (selectedPlanIndex === null) return null;
-    return plans[selectedPlanIndex] || null;
-  }, [plans, selectedPlanIndex]);
+    return filteredPlans[selectedPlanIndex] || null;
+  }, [filteredPlans, selectedPlanIndex]);
 
   const getRakeSequence = (plan: Plan | null, fallbackIndex: number) => {
     if (!plan) return fallbackIndex + 1;
@@ -90,25 +105,43 @@ export function PlanTable({ plans }: PlanTableProps) {
           <Train className="h-5 w-5 text-primary" />
           Rake Formations
         </h3>
-        <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as 'normal' | 'visual')} className="w-auto">
-          <TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-muted/50">
-            <TabsTrigger value="normal" className="text-xs sm:text-sm px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200">
-              <List className="h-4 w-4 mr-2" />
-              Normal View
-            </TabsTrigger>
-            <TabsTrigger value="visual" className="text-xs sm:text-sm px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200">
-              <Eye className="h-4 w-4 mr-2" />
-              Visual View
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <div className="flex items-center gap-3">
+          <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as 'normal' | 'visual')} className="w-auto">
+            <TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-muted/50">
+              <TabsTrigger value="normal" className="text-xs sm:text-sm px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200">
+                <List className="h-4 w-4 mr-2" />
+                Normal View
+              </TabsTrigger>
+              <TabsTrigger value="visual" className="text-xs sm:text-sm px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200">
+                <Eye className="h-4 w-4 mr-2" />
+                Visual View
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search rakes, orders, destinations..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9 w-[280px] h-9"
+            />
+          </div>
+        </div>
       </div>
+
+      {filteredPlans.length === 0 && searchQuery && (
+        <div className="text-center py-8 text-muted-foreground">
+          No rake formations found matching "{searchQuery}"
+        </div>
+      )}
 
       {/* Visual Train Plans */}
       {viewMode === 'visual' && (
         <div className="space-y-4 animate-slide-up">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {plans.map((plan, index) => {
+            {filteredPlans.map((plan, index) => {
               const displayRakeId = getDisplayRakeId(plan, index);
               return (
                 <div
@@ -155,7 +188,7 @@ export function PlanTable({ plans }: PlanTableProps) {
         <div className="animate-slide-up">
           {/* Mobile Card Layout */}
           <div className="block sm:hidden space-y-4">
-            {plans.map((plan, index) => {
+            {filteredPlans.map((plan, index) => {
               const displayRakeId = getDisplayRakeId(plan, index);
               return (
                 <div 
@@ -223,7 +256,7 @@ export function PlanTable({ plans }: PlanTableProps) {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {plans.map((plan, index) => {
+                  {filteredPlans.map((plan, index) => {
                     const displayRakeId = getDisplayRakeId(plan, index);
                     return (
                       <TableRow key={index} className="hover:bg-muted/50 transition-colors cursor-pointer" onClick={() => openPlanDialog(index)}>
@@ -354,8 +387,12 @@ export function PlanTable({ plans }: PlanTableProps) {
                           <div className="text-[11px] text-muted-foreground mb-1">
                             Ord: <span className="text-foreground font-semibold">{isLoaded ? wagon.orderId : '—'}</span>
                           </div>
-                          <div className="text-[11px] text-muted-foreground">
+                          <div className="text-[11px] text-muted-foreground mb-1">
                             Prod: <span className="text-foreground font-semibold">{isLoaded ? wagon.product : '—'}</span>
+                          </div>
+                          <div className="text-[11px] text-muted-foreground flex items-center gap-1">
+                            <Clock className="h-3 w-3" />
+                            <span className="text-foreground font-semibold">{isLoaded && wagon.deadline ? new Date(wagon.deadline).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : '—'}</span>
                           </div>
                         </div>
                       </div>

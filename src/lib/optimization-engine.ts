@@ -31,6 +31,7 @@ export interface WagonLoad {
   destCode?: string;
   customerName?: string;
   wagonType?: string;
+  deadline?: string;
 }
 
 export interface InputData {
@@ -199,7 +200,8 @@ export class OptimizationEngine {
               source: stockAlt.id,
               destCode,
               customerName: altOrder.customer,
-              wagonType: this.getWagonTypeForProduct(altOrder.product)
+              wagonType: this.getWagonTypeForProduct(altOrder.product),
+              deadline: altOrder.deadline
             });
             remainingByOrder.set(altOrder.id, remainingAlt - loadAlt);
             stockyardInventory.set(stockAlt.id, stockAvailableAlt - loadAlt);
@@ -222,7 +224,8 @@ export class OptimizationEngine {
             source: stockyard.id,
             destCode,
             customerName: nextOrder.customer,
-            wagonType: this.getWagonTypeForProduct(nextOrder.product)
+            wagonType: this.getWagonTypeForProduct(nextOrder.product),
+            deadline: nextOrder.deadline
           });
           remainingByOrder.set(nextOrder.id, remainingQty - load);
           stockyardInventory.set(stockyard.id, stockAvailable - load);
