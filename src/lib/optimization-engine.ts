@@ -1,4 +1,5 @@
 // Rake Formation Optimization Engine for SAIL
+import { calculateFinalScore } from './mlEngine';
 
 export interface StockYard {
   id: string;
@@ -129,11 +130,12 @@ export class OptimizationEngine {
       orderGroups.get(key)!.push(order);
     }
 
-    // Sort each group by priority and deadline
+    // Sort each group by ML final score (descending - higher score = higher priority)
     orderGroups.forEach((orders) => {
       orders.sort((a, b) => {
-        if (a.priority !== b.priority) return a.priority - b.priority;
-        return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
+        const scoreA = calculateFinalScore(a).finalScore;
+        const scoreB = calculateFinalScore(b).finalScore;
+        return scoreB - scoreA; // Descending: higher score first
       });
     });
 
@@ -154,10 +156,11 @@ export class OptimizationEngine {
     for (const [key, orders] of orderGroups) {
       const destCode = key;
 
-      // Sort by priority then deadline
+      // Sort by ML final score (descending - higher score = higher priority)
       orders.sort((a, b) => {
-        if (a.priority !== b.priority) return a.priority - b.priority;
-        return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
+        const scoreA = calculateFinalScore(a).finalScore;
+        const scoreB = calculateFinalScore(b).finalScore;
+        return scoreB - scoreA; // Descending: higher score first
       });
 
       // Track remaining per order
