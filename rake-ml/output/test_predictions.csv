@@ -1,0 +1,101 @@
+customer,product,quantity,destination,priority,mode,days_to_deadline,true,pred
+CMO Delhi,Steel Plates,50,DEL,P3,Road,24,1,0
+CMO Chennai,Steel Plates,125,JBP,P3,Road,4,0,0
+CMO Kolkata,Steel Plates,488,BOM,P1,Road,10,0,1
+CMO Mumbai,Hot Rolled Coil,50,ICF,P3,Road,2,1,1
+CMO Chennai,Cold Rolled Coil,265,JBP,P1,Road,18,1,1
+CMO Delhi,Hot Rolled Coil,57,ICF,P1,Rail,26,1,1
+CMO Chennai,Steel Plates,629,BOM,P2,Road,35,1,0
+CMO Chennai,Hot Rolled Coil,267,PUN,P2,Road,-10,0,0
+CMO Chennai,Cold Rolled Coil,387,DEL,P2,Rail,24,0,0
+CMO Delhi,Steel Plates,128,BOM,P3,Rail,20,0,1
+CMO Mumbai,Steel Coils,169,PUN,P2,Rail,-6,0,0
+CMO Kolkata,Cold Rolled Coil,280,MAA,P2,Rail,0,0,1
+CMO Kolkata,Hot Rolled Coil,411,MAA,P2,Rail,7,1,1
+CMO Delhi,Cold Rolled Coil,1242,DEL,P3,Road,3,1,1
+CMO Mumbai,Steel Coils,221,PUN,P3,Rail,25,1,1
+CMO Mumbai,Hot Rolled Coil,50,PUN,P3,Rail,11,1,1
+CMO Chennai,Steel Plates,374,MAA,P3,Rail,55,1,1
+CMO Chennai,Steel Coils,204,ICF,P1,Road,18,1,1
+CMO Pune,Steel Plates,292,PUN,P2,Rail,4,1,0
+CMO Mumbai,Steel Coils,511,JBP,P3,Rail,-3,0,0
+CMO Chennai,Cold Rolled Coil,481,MAA,P3,Rail,24,1,1
+CMO Kolkata,Cold Rolled Coil,162,ICF,P2,Rail,-1,1,1
+CMO Delhi,Cold Rolled Coil,551,DEL,P3,Road,17,1,1
+CMO Chennai,Cold Rolled Coil,309,JBP,P2,Rail,-1,0,0
+CMO Kolkata,Steel Coils,93,ICF,P2,Rail,-11,0,0
+CMO Mumbai,Steel Plates,174,ICF,P3,Road,-3,0,0
+CMO Chennai,Steel Coils,1117,DEL,P3,Rail,8,1,0
+CMO Pune,Steel Plates,356,JBP,P1,Road,-11,0,0
+CMO Mumbai,Steel Coils,151,KOL,P2,Rail,14,0,1
+CMO Kolkata,Steel Plates,60,KOL,P2,Rail,-1,0,1
+CMO Chennai,Cold Rolled Coil,394,ICF,P1,Road,-1,1,1
+CMO Pune,Steel Coils,50,JBP,P3,Rail,41,1,1
+CMO Pune,Steel Coils,187,KOL,P3,Rail,6,1,0
+CMO Pune,Hot Rolled Coil,65,PUN,P1,Rail,11,1,1
+CMO Chennai,Steel Coils,118,DEL,P2,Rail,17,0,0
+CMO Mumbai,Hot Rolled Coil,60,PUN,P2,Road,22,0,1
+CMO Chennai,Cold Rolled Coil,540,KOL,P3,Rail,20,1,0
+CMO Mumbai,Steel Plates,257,JBP,P2,Road,32,0,1
+CMO Pune,Hot Rolled Coil,245,DEL,P2,Rail,5,0,1
+CMO Pune,Steel Coils,358,PUN,P2,Road,29,1,0
+CMO Kolkata,Hot Rolled Coil,557,DEL,P3,Road,24,1,0
+CMO Chennai,Hot Rolled Coil,94,JBP,P2,Road,-1,1,0
+CMO Chennai,Hot Rolled Coil,332,JBP,P3,Rail,14,0,1
+CMO Kolkata,Steel Coils,974,DEL,P3,Road,13,1,1
+CMO Pune,Cold Rolled Coil,173,ICF,P2,Road,5,0,0
+CMO Kolkata,Cold Rolled Coil,50,DEL,P2,Road,11,0,0
+CMO Kolkata,Cold Rolled Coil,386,PUN,P2,Rail,3,1,1
+CMO Chennai,Cold Rolled Coil,50,ICF,P2,Rail,-5,0,0
+CMO Kolkata,Steel Coils,234,ICF,P1,Rail,24,1,1
+CMO Kolkata,Hot Rolled Coil,185,DEL,P3,Road,13,0,1
+CMO Kolkata,Hot Rolled Coil,694,JBP,P1,Road,-2,0,0
+CMO Mumbai,Cold Rolled Coil,50,PUN,P3,Rail,-3,0,0
+CMO Kolkata,Cold Rolled Coil,620,MAA,P3,Rail,7,0,1
+CMO Chennai,Cold Rolled Coil,72,MAA,P2,Road,33,1,1
+CMO Delhi,Steel Plates,205,KOL,P2,Rail,26,1,1
+CMO Pune,Steel Plates,308,PUN,P1,Road,32,1,1
+CMO Mumbai,Cold Rolled Coil,184,JBP,P3,Road,-1,0,1
+CMO Kolkata,Cold Rolled Coil,50,MAA,P2,Rail,-9,0,0
+CMO Delhi,Hot Rolled Coil,201,PUN,P3,Rail,0,1,0
+CMO Mumbai,Cold Rolled Coil,70,KOL,P2,Road,-11,0,0
+CMO Chennai,Steel Coils,320,KOL,P3,Road,56,1,1
+CMO Mumbai,Cold Rolled Coil,725,ICF,P3,Road,-10,0,0
+CMO Kolkata,Cold Rolled Coil,152,MAA,P1,Road,-1,1,1
+CMO Pune,Steel Coils,206,JBP,P3,Road,46,0,1
+CMO Delhi,Hot Rolled Coil,549,JBP,P2,Road,37,1,1
+CMO Mumbai,Hot Rolled Coil,85,DEL,P2,Rail,24,0,1
+CMO Chennai,Cold Rolled Coil,50,KOL,P3,Road,0,1,1
+CMO Chennai,Hot Rolled Coil,1755,JBP,P2,Road,37,1,1
+CMO Delhi,Cold Rolled Coil,242,KOL,P2,Road,-5,0,0
+CMO Mumbai,Cold Rolled Coil,629,DEL,P3,Rail,25,1,0
+CMO Pune,Steel Coils,275,PUN,P3,Road,1,1,1
+CMO Chennai,Steel Plates,829,BOM,P2,Rail,-10,0,0
+CMO Mumbai,Cold Rolled Coil,356,PUN,P2,Road,-2,0,0
+CMO Mumbai,Steel Coils,54,JBP,P1,Rail,29,1,1
+CMO Mumbai,Steel Coils,50,MAA,P3,Road,35,0,1
+CMO Delhi,Hot Rolled Coil,1295,BOM,P1,Rail,8,1,1
+CMO Delhi,Steel Coils,482,BOM,P2,Rail,25,1,0
+CMO Mumbai,Cold Rolled Coil,1174,MAA,P2,Road,8,1,1
+CMO Chennai,Steel Coils,673,DEL,P2,Road,2,1,0
+CMO Delhi,Cold Rolled Coil,101,ICF,P2,Road,4,1,0
+CMO Mumbai,Steel Coils,273,BOM,P3,Rail,-6,0,0
+CMO Pune,Hot Rolled Coil,370,DEL,P3,Rail,22,1,1
+CMO Mumbai,Hot Rolled Coil,676,MAA,P2,Rail,-1,0,1
+CMO Pune,Cold Rolled Coil,174,BOM,P2,Rail,9,0,1
+CMO Mumbai,Steel Plates,243,JBP,P2,Road,-9,0,0
+CMO Kolkata,Steel Coils,152,JBP,P1,Rail,25,1,1
+CMO Kolkata,Cold Rolled Coil,341,KOL,P2,Road,12,0,0
+CMO Delhi,Steel Coils,377,MAA,P1,Road,-11,0,0
+CMO Delhi,Hot Rolled Coil,558,JBP,P2,Road,19,0,1
+CMO Kolkata,Steel Plates,347,MAA,P2,Road,8,1,1
+CMO Delhi,Steel Coils,172,ICF,P2,Road,24,0,0
+CMO Mumbai,Steel Coils,90,KOL,P2,Road,9,1,0
+CMO Chennai,Steel Plates,120,KOL,P3,Rail,-2,0,0
+CMO Chennai,Steel Coils,417,BOM,P2,Road,7,1,0
+CMO Pune,Steel Plates,288,DEL,P3,Rail,5,1,1
+CMO Delhi,Steel Plates,323,PUN,P2,Road,40,1,0
+CMO Chennai,Steel Plates,129,ICF,P2,Road,-8,0,0
+CMO Chennai,Steel Plates,627,BOM,P2,Road,18,0,0
+CMO Mumbai,Hot Rolled Coil,334,KOL,P2,Road,6,0,1
+CMO Chennai,Steel Coils,244,PUN,P2,Rail,-5,0,0

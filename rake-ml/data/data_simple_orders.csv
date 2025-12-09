@@ -1,0 +1,501 @@
+order_id,customer,product,quantity,destination,priority,mode,deadline,delivered_on_time
+ORD-1000,CMO Delhi,Steel Coils,140,JBP,P3,Road,2025-12-28,1
+ORD-1001,CMO Mumbai,Steel Plates,50,BOM,P1,Rail,2026-01-10,0
+ORD-1002,CMO Pune,Steel Coils,275,PUN,P3,Road,2025-12-11,1
+ORD-1003,CMO Delhi,Steel Coils,60,DEL,P2,Rail,2025-12-27,1
+ORD-1004,CMO Mumbai,Steel Coils,169,PUN,P2,Rail,2025-12-04,0
+ORD-1005,CMO Pune,Cold Rolled Coil,136,BOM,P2,Road,2025-12-23,0
+ORD-1006,CMO Pune,Hot Rolled Coil,66,ICF,P2,Rail,2025-12-10,0
+ORD-1007,CMO Mumbai,Cold Rolled Coil,56,KOL,P1,Road,2025-12-20,0
+ORD-1008,CMO Mumbai,Steel Plates,1011,ICF,P3,Road,2025-12-09,0
+ORD-1009,CMO Delhi,Steel Coils,174,MAA,P1,Rail,2025-12-14,1
+ORD-1010,CMO Kolkata,Hot Rolled Coil,50,PUN,P3,Road,2025-12-31,1
+ORD-1011,CMO Delhi,Cold Rolled Coil,220,PUN,P2,Rail,2025-12-01,0
+ORD-1012,CMO Chennai,Steel Coils,1047,PUN,P3,Road,2025-12-30,1
+ORD-1013,CMO Pune,Hot Rolled Coil,65,PUN,P1,Rail,2025-12-21,1
+ORD-1014,CMO Delhi,Steel Coils,147,JBP,P2,Rail,2025-12-12,1
+ORD-1015,CMO Kolkata,Steel Coils,234,ICF,P1,Rail,2026-01-03,1
+ORD-1016,CMO Delhi,Cold Rolled Coil,50,KOL,P3,Road,2025-12-09,1
+ORD-1017,CMO Kolkata,Steel Plates,506,KOL,P3,Road,2025-12-28,0
+ORD-1018,CMO Mumbai,Hot Rolled Coil,442,JBP,P1,Rail,2025-12-07,0
+ORD-1019,CMO Pune,Steel Plates,292,PUN,P2,Rail,2025-12-14,1
+ORD-1020,CMO Mumbai,Cold Rolled Coil,111,MAA,P2,Road,2025-12-31,0
+ORD-1021,CMO Pune,Steel Plates,191,JBP,P1,Road,2026-01-08,1
+ORD-1022,CMO Delhi,Steel Plates,429,ICF,P2,Rail,2025-12-18,1
+ORD-1023,CMO Kolkata,Cold Rolled Coil,167,KOL,P1,Rail,2026-01-11,1
+ORD-1024,CMO Mumbai,Hot Rolled Coil,50,BOM,P2,Road,2025-12-20,0
+ORD-1025,CMO Chennai,Cold Rolled Coil,86,BOM,P2,Road,2025-11-29,0
+ORD-1026,CMO Mumbai,Steel Plates,77,JBP,P1,Road,2025-12-07,0
+ORD-1027,CMO Pune,Cold Rolled Coil,495,PUN,P2,Road,2025-12-11,0
+ORD-1028,CMO Kolkata,Steel Plates,488,BOM,P1,Road,2025-12-20,0
+ORD-1029,CMO Delhi,Steel Coils,679,ICF,P2,Rail,2026-01-02,1
+ORD-1030,CMO Mumbai,Steel Plates,77,ICF,P2,Road,2025-12-23,1
+ORD-1031,CMO Pune,Steel Coils,214,MAA,P2,Road,2025-12-22,1
+ORD-1032,CMO Pune,Cold Rolled Coil,50,PUN,P2,Road,2025-12-16,1
+ORD-1033,CMO Pune,Steel Coils,364,JBP,P2,Rail,2025-12-25,0
+ORD-1034,CMO Pune,Hot Rolled Coil,984,ICF,P2,Road,2025-11-29,0
+ORD-1035,CMO Delhi,Hot Rolled Coil,50,MAA,P2,Rail,2025-12-18,1
+ORD-1036,CMO Chennai,Steel Coils,50,JBP,P2,Road,2025-12-16,1
+ORD-1037,CMO Pune,Steel Plates,201,PUN,P3,Rail,2025-12-23,1
+ORD-1038,CMO Kolkata,Steel Plates,334,BOM,P3,Road,2025-12-30,1
+ORD-1039,CMO Mumbai,Steel Coils,300,PUN,P2,Road,2025-12-06,0
+ORD-1040,CMO Chennai,Steel Coils,50,DEL,P3,Road,2025-12-05,1
+ORD-1041,CMO Kolkata,Steel Plates,268,DEL,P2,Rail,2025-12-10,1
+ORD-1042,CMO Pune,Steel Coils,215,DEL,P2,Road,2025-12-04,0
+ORD-1043,CMO Delhi,Steel Plates,146,BOM,P3,Road,2025-12-26,1
+ORD-1044,CMO Pune,Steel Plates,125,KOL,P1,Road,2025-12-31,0
+ORD-1045,CMO Mumbai,Steel Plates,243,JBP,P2,Road,2025-12-01,0
+ORD-1046,CMO Chennai,Hot Rolled Coil,50,MAA,P3,Road,2025-12-22,1
+ORD-1047,CMO Delhi,Steel Plates,128,BOM,P3,Rail,2025-12-30,0
+ORD-1048,CMO Kolkata,Steel Coils,654,PUN,P3,Rail,2025-12-09,1
+ORD-1049,CMO Pune,Steel Plates,686,DEL,P2,Rail,2025-12-22,1
+ORD-1050,CMO Delhi,Steel Plates,50,DEL,P2,Rail,2026-01-15,1
+ORD-1051,CMO Kolkata,Steel Coils,76,PUN,P3,Rail,2025-12-26,1
+ORD-1052,CMO Kolkata,Cold Rolled Coil,118,BOM,P3,Rail,2026-01-02,1
+ORD-1053,CMO Pune,Cold Rolled Coil,252,BOM,P1,Road,2025-12-25,1
+ORD-1054,CMO Chennai,Steel Plates,92,DEL,P2,Rail,2025-12-17,0
+ORD-1055,CMO Chennai,Hot Rolled Coil,299,MAA,P3,Road,2025-12-24,1
+ORD-1056,CMO Chennai,Steel Coils,258,JBP,P2,Rail,2025-12-28,1
+ORD-1057,CMO Delhi,Cold Rolled Coil,50,JBP,P2,Road,2025-12-07,0
+ORD-1058,CMO Delhi,Steel Plates,846,BOM,P3,Rail,2025-12-15,1
+ORD-1059,CMO Pune,Cold Rolled Coil,790,BOM,P2,Road,2025-12-29,0
+ORD-1060,CMO Mumbai,Hot Rolled Coil,994,MAA,P3,Rail,2025-12-07,0
+ORD-1061,CMO Delhi,Cold Rolled Coil,114,ICF,P1,Rail,2025-11-29,0
+ORD-1062,CMO Delhi,Steel Coils,825,DEL,P2,Rail,2025-12-06,0
+ORD-1063,CMO Mumbai,Cold Rolled Coil,1383,MAA,P1,Road,2025-12-21,1
+ORD-1064,CMO Mumbai,Cold Rolled Coil,629,DEL,P3,Rail,2026-01-04,1
+ORD-1065,CMO Chennai,Steel Coils,104,MAA,P3,Road,2026-01-03,0
+ORD-1066,CMO Chennai,Hot Rolled Coil,605,MAA,P3,Road,2025-12-26,0
+ORD-1067,CMO Mumbai,Steel Plates,314,KOL,P3,Rail,2026-02-07,0
+ORD-1068,CMO Delhi,Steel Coils,662,JBP,P2,Road,2025-12-08,0
+ORD-1069,CMO Delhi,Steel Coils,50,PUN,P2,Road,2025-12-15,0
+ORD-1070,CMO Pune,Steel Plates,101,DEL,P2,Rail,2025-12-11,1
+ORD-1071,CMO Mumbai,Steel Coils,221,PUN,P3,Rail,2026-01-04,1
+ORD-1072,CMO Mumbai,Cold Rolled Coil,292,DEL,P1,Rail,2025-12-19,1
+ORD-1073,CMO Pune,Steel Coils,304,PUN,P3,Rail,2025-12-09,0
+ORD-1074,CMO Chennai,Hot Rolled Coil,217,KOL,P2,Rail,2025-12-09,1
+ORD-1075,CMO Kolkata,Steel Plates,50,KOL,P1,Road,2025-12-31,0
+ORD-1076,CMO Mumbai,Hot Rolled Coil,542,MAA,P2,Road,2025-12-01,0
+ORD-1077,CMO Delhi,Steel Coils,86,MAA,P2,Rail,2025-12-13,0
+ORD-1078,CMO Delhi,Steel Plates,323,PUN,P2,Road,2026-01-19,1
+ORD-1079,CMO Mumbai,Hot Rolled Coil,85,DEL,P2,Rail,2026-01-03,0
+ORD-1080,CMO Kolkata,Hot Rolled Coil,50,BOM,P1,Road,2025-12-25,1
+ORD-1081,CMO Pune,Hot Rolled Coil,50,PUN,P2,Rail,2025-12-30,1
+ORD-1082,CMO Pune,Hot Rolled Coil,57,JBP,P2,Rail,2026-01-12,1
+ORD-1083,CMO Mumbai,Hot Rolled Coil,50,DEL,P2,Rail,2025-11-29,0
+ORD-1084,CMO Pune,Steel Plates,209,KOL,P3,Road,2025-12-05,0
+ORD-1085,CMO Pune,Steel Plates,308,JBP,P1,Road,2025-12-25,1
+ORD-1086,CMO Mumbai,Hot Rolled Coil,845,PUN,P2,Road,2026-01-11,1
+ORD-1087,CMO Kolkata,Steel Coils,236,DEL,P3,Road,2025-12-01,0
+ORD-1088,CMO Kolkata,Steel Coils,974,DEL,P3,Road,2025-12-23,1
+ORD-1089,CMO Mumbai,Hot Rolled Coil,115,BOM,P3,Road,2025-12-09,1
+ORD-1090,CMO Pune,Cold Rolled Coil,505,PUN,P2,Rail,2025-12-24,0
+ORD-1091,CMO Delhi,Steel Coils,629,JBP,P3,Rail,2025-12-09,0
+ORD-1092,CMO Pune,Steel Coils,99,ICF,P1,Road,2025-12-30,0
+ORD-1093,CMO Pune,Steel Plates,159,MAA,P2,Rail,2025-12-28,0
+ORD-1094,CMO Delhi,Hot Rolled Coil,125,KOL,P3,Rail,2025-12-15,0
+ORD-1095,CMO Kolkata,Steel Plates,421,JBP,P1,Rail,2026-01-04,0
+ORD-1096,CMO Delhi,Hot Rolled Coil,211,ICF,P3,Road,2025-12-29,1
+ORD-1097,CMO Pune,Steel Plates,50,BOM,P3,Rail,2025-12-14,1
+ORD-1098,CMO Mumbai,Cold Rolled Coil,115,DEL,P3,Rail,2025-12-20,0
+ORD-1099,CMO Kolkata,Cold Rolled Coil,178,ICF,P2,Rail,2025-12-27,1
+ORD-1100,CMO Kolkata,Steel Plates,334,ICF,P3,Rail,2025-12-28,1
+ORD-1101,CMO Chennai,Steel Coils,204,ICF,P1,Road,2025-12-28,1
+ORD-1102,CMO Mumbai,Steel Plates,174,ICF,P3,Road,2025-12-07,0
+ORD-1103,CMO Kolkata,Hot Rolled Coil,430,ICF,P2,Rail,2025-12-14,1
+ORD-1104,CMO Mumbai,Steel Coils,50,JBP,P3,Rail,2025-12-11,1
+ORD-1105,CMO Chennai,Hot Rolled Coil,1294,KOL,P2,Rail,2025-12-22,1
+ORD-1106,CMO Kolkata,Hot Rolled Coil,502,JBP,P3,Road,2025-12-09,0
+ORD-1107,CMO Pune,Hot Rolled Coil,245,DEL,P2,Rail,2025-12-15,0
+ORD-1108,CMO Kolkata,Steel Plates,50,PUN,P2,Road,2025-12-18,1
+ORD-1109,CMO Delhi,Steel Coils,50,PUN,P1,Road,2025-12-14,1
+ORD-1110,CMO Kolkata,Hot Rolled Coil,411,MAA,P2,Rail,2025-12-17,1
+ORD-1111,CMO Chennai,Steel Plates,608,KOL,P2,Rail,2025-12-25,0
+ORD-1112,CMO Chennai,Steel Coils,50,PUN,P3,Rail,2025-12-22,1
+ORD-1113,CMO Kolkata,Cold Rolled Coil,242,DEL,P3,Road,2025-12-19,1
+ORD-1114,CMO Pune,Hot Rolled Coil,297,JBP,P2,Rail,2026-01-20,1
+ORD-1115,CMO Kolkata,Hot Rolled Coil,694,JBP,P1,Road,2025-12-08,0
+ORD-1116,CMO Kolkata,Cold Rolled Coil,901,JBP,P3,Road,2026-01-20,1
+ORD-1117,CMO Pune,Steel Plates,62,BOM,P2,Road,2025-12-07,0
+ORD-1118,CMO Chennai,Steel Plates,262,PUN,P1,Road,2025-12-24,1
+ORD-1119,CMO Chennai,Steel Coils,504,KOL,P2,Road,2026-01-16,1
+ORD-1120,CMO Mumbai,Cold Rolled Coil,725,ICF,P3,Road,2025-11-30,0
+ORD-1121,CMO Chennai,Cold Rolled Coil,603,MAA,P1,Rail,2026-01-15,1
+ORD-1122,CMO Pune,Cold Rolled Coil,141,ICF,P3,Rail,2025-11-29,0
+ORD-1123,CMO Delhi,Hot Rolled Coil,553,PUN,P3,Road,2026-01-08,1
+ORD-1124,CMO Delhi,Steel Plates,160,JBP,P2,Road,2025-12-19,0
+ORD-1125,CMO Mumbai,Steel Plates,868,BOM,P3,Rail,2025-12-19,1
+ORD-1126,CMO Delhi,Steel Plates,179,MAA,P1,Rail,2025-12-20,1
+ORD-1127,CMO Chennai,Cold Rolled Coil,334,JBP,P2,Rail,2025-12-26,1
+ORD-1128,CMO Chennai,Cold Rolled Coil,50,MAA,P2,Rail,2026-01-11,1
+ORD-1129,CMO Mumbai,Steel Coils,573,ICF,P2,Rail,2025-12-20,1
+ORD-1130,CMO Chennai,Steel Plates,627,BOM,P2,Road,2025-12-28,0
+ORD-1131,CMO Delhi,Steel Plates,71,ICF,P1,Rail,2026-01-08,1
+ORD-1132,CMO Chennai,Steel Plates,129,ICF,P2,Road,2025-12-02,0
+ORD-1133,CMO Pune,Hot Rolled Coil,128,ICF,P2,Road,2025-11-29,0
+ORD-1134,CMO Pune,Cold Rolled Coil,151,ICF,P2,Road,2025-11-29,0
+ORD-1135,CMO Mumbai,Cold Rolled Coil,1174,MAA,P2,Road,2025-12-18,1
+ORD-1136,CMO Mumbai,Hot Rolled Coil,301,ICF,P2,Road,2025-12-24,1
+ORD-1137,CMO Mumbai,Hot Rolled Coil,127,MAA,P3,Rail,2025-12-05,0
+ORD-1138,CMO Kolkata,Steel Plates,330,KOL,P1,Road,2025-12-11,1
+ORD-1139,CMO Kolkata,Steel Coils,50,BOM,P1,Rail,2025-12-08,0
+ORD-1140,CMO Mumbai,Cold Rolled Coil,69,JBP,P2,Rail,2026-01-17,1
+ORD-1141,CMO Mumbai,Steel Coils,481,MAA,P2,Road,2025-12-19,1
+ORD-1142,CMO Kolkata,Cold Rolled Coil,620,MAA,P3,Rail,2025-12-17,0
+ORD-1143,CMO Mumbai,Cold Rolled Coil,413,MAA,P1,Rail,2025-12-15,1
+ORD-1144,CMO Pune,Cold Rolled Coil,138,MAA,P2,Rail,2025-11-29,0
+ORD-1145,CMO Kolkata,Hot Rolled Coil,412,ICF,P1,Road,2026-01-08,1
+ORD-1146,CMO Chennai,Steel Plates,374,MAA,P3,Rail,2026-02-03,1
+ORD-1147,CMO Kolkata,Cold Rolled Coil,177,MAA,P2,Rail,2026-01-04,1
+ORD-1148,CMO Chennai,Hot Rolled Coil,94,JBP,P2,Road,2025-12-09,1
+ORD-1149,CMO Mumbai,Cold Rolled Coil,663,BOM,P2,Rail,2025-12-03,0
+ORD-1150,CMO Chennai,Steel Coils,467,DEL,P2,Road,2025-12-20,0
+ORD-1151,CMO Mumbai,Cold Rolled Coil,410,BOM,P2,Rail,2025-12-07,0
+ORD-1152,CMO Kolkata,Cold Rolled Coil,100,KOL,P2,Rail,2026-01-01,1
+ORD-1153,CMO Chennai,Hot Rolled Coil,1291,KOL,P2,Road,2026-01-16,1
+ORD-1154,CMO Kolkata,Cold Rolled Coil,50,KOL,P1,Rail,2025-12-09,1
+ORD-1155,CMO Chennai,Steel Coils,100,JBP,P1,Rail,2025-12-11,0
+ORD-1156,CMO Kolkata,Steel Plates,50,JBP,P2,Rail,2025-12-23,1
+ORD-1157,CMO Delhi,Steel Coils,152,BOM,P3,Rail,2025-12-18,0
+ORD-1158,CMO Delhi,Steel Plates,509,BOM,P2,Rail,2025-12-26,0
+ORD-1159,CMO Chennai,Steel Coils,244,PUN,P2,Rail,2025-12-05,0
+ORD-1160,CMO Chennai,Hot Rolled Coil,440,ICF,P1,Road,2025-12-08,0
+ORD-1161,CMO Mumbai,Steel Coils,83,ICF,P1,Rail,2025-11-29,0
+ORD-1162,CMO Kolkata,Steel Coils,102,PUN,P2,Rail,2025-12-18,1
+ORD-1163,CMO Kolkata,Cold Rolled Coil,50,MAA,P2,Rail,2025-12-01,0
+ORD-1164,CMO Delhi,Steel Plates,50,DEL,P3,Road,2026-01-03,1
+ORD-1165,CMO Pune,Steel Coils,343,ICF,P3,Rail,2025-12-10,0
+ORD-1166,CMO Kolkata,Cold Rolled Coil,191,JBP,P2,Road,2025-12-27,0
+ORD-1167,CMO Delhi,Hot Rolled Coil,1005,DEL,P1,Road,2025-12-15,0
+ORD-1168,CMO Chennai,Steel Coils,835,MAA,P1,Road,2025-12-20,1
+ORD-1169,CMO Chennai,Steel Plates,553,MAA,P1,Rail,2025-12-16,0
+ORD-1170,CMO Pune,Hot Rolled Coil,67,PUN,P1,Road,2025-12-24,1
+ORD-1171,CMO Chennai,Cold Rolled Coil,222,ICF,P2,Road,2025-12-12,0
+ORD-1172,CMO Kolkata,Steel Plates,149,ICF,P3,Rail,2025-11-29,0
+ORD-1173,CMO Kolkata,Cold Rolled Coil,107,BOM,P3,Road,2025-12-04,0
+ORD-1174,CMO Pune,Cold Rolled Coil,79,KOL,P3,Rail,2025-12-31,0
+ORD-1175,CMO Chennai,Hot Rolled Coil,293,BOM,P1,Road,2025-11-29,0
+ORD-1176,CMO Mumbai,Hot Rolled Coil,296,ICF,P2,Road,2025-12-24,0
+ORD-1177,CMO Kolkata,Hot Rolled Coil,228,PUN,P3,Road,2025-12-12,0
+ORD-1178,CMO Pune,Steel Coils,50,PUN,P2,Rail,2025-12-31,1
+ORD-1179,CMO Delhi,Steel Plates,253,JBP,P3,Road,2025-12-07,0
+ORD-1180,CMO Chennai,Steel Plates,125,JBP,P3,Road,2025-12-14,0
+ORD-1181,CMO Chennai,Cold Rolled Coil,50,ICF,P2,Rail,2025-12-05,0
+ORD-1182,CMO Delhi,Hot Rolled Coil,381,BOM,P2,Road,2025-12-25,1
+ORD-1183,CMO Mumbai,Hot Rolled Coil,127,JBP,P1,Road,2026-01-16,0
+ORD-1184,CMO Chennai,Hot Rolled Coil,262,MAA,P2,Road,2025-12-28,1
+ORD-1185,CMO Kolkata,Cold Rolled Coil,264,KOL,P2,Road,2025-12-18,0
+ORD-1186,CMO Kolkata,Steel Plates,50,DEL,P3,Rail,2025-12-20,0
+ORD-1187,CMO Kolkata,Steel Coils,767,JBP,P3,Rail,2025-12-29,1
+ORD-1188,CMO Mumbai,Steel Plates,257,JBP,P2,Road,2026-01-11,0
+ORD-1189,CMO Kolkata,Hot Rolled Coil,779,DEL,P2,Rail,2025-12-11,1
+ORD-1190,CMO Kolkata,Steel Plates,1256,KOL,P3,Rail,2025-12-19,1
+ORD-1191,CMO Kolkata,Steel Coils,152,JBP,P1,Rail,2026-01-04,1
+ORD-1192,CMO Kolkata,Steel Coils,487,DEL,P1,Road,2025-12-04,0
+ORD-1193,CMO Mumbai,Cold Rolled Coil,757,DEL,P2,Rail,2025-11-29,0
+ORD-1194,CMO Pune,Hot Rolled Coil,401,MAA,P2,Road,2025-12-15,1
+ORD-1195,CMO Chennai,Hot Rolled Coil,58,BOM,P2,Rail,2025-11-29,0
+ORD-1196,CMO Kolkata,Cold Rolled Coil,738,DEL,P2,Rail,2026-01-15,1
+ORD-1197,CMO Chennai,Cold Rolled Coil,326,DEL,P1,Rail,2026-01-04,0
+ORD-1198,CMO Mumbai,Steel Plates,50,ICF,P2,Road,2026-01-26,1
+ORD-1199,CMO Delhi,Steel Plates,415,DEL,P2,Road,2025-12-19,0
+ORD-1200,CMO Pune,Steel Plates,68,ICF,P1,Road,2025-12-18,1
+ORD-1201,CMO Chennai,Cold Rolled Coil,50,KOL,P3,Road,2025-12-10,1
+ORD-1202,CMO Kolkata,Steel Coils,222,PUN,P2,Rail,2026-01-06,1
+ORD-1203,CMO Mumbai,Steel Plates,60,KOL,P3,Rail,2025-11-29,0
+ORD-1204,CMO Mumbai,Steel Plates,140,BOM,P2,Rail,2025-12-03,1
+ORD-1205,CMO Mumbai,Steel Coils,50,MAA,P3,Road,2026-01-14,0
+ORD-1206,CMO Pune,Cold Rolled Coil,50,KOL,P2,Rail,2025-12-29,1
+ORD-1207,CMO Mumbai,Hot Rolled Coil,50,JBP,P3,Road,2025-12-03,0
+ORD-1208,CMO Chennai,Steel Coils,317,JBP,P2,Rail,2025-12-15,0
+ORD-1209,CMO Kolkata,Steel Plates,580,MAA,P3,Rail,2025-12-13,1
+ORD-1210,CMO Pune,Steel Plates,330,JBP,P2,Rail,2025-12-27,1
+ORD-1211,CMO Kolkata,Steel Plates,50,DEL,P2,Rail,2025-12-14,1
+ORD-1212,CMO Mumbai,Hot Rolled Coil,60,PUN,P2,Road,2026-01-01,0
+ORD-1213,CMO Chennai,Steel Coils,125,MAA,P2,Road,2025-12-16,1
+ORD-1214,CMO Chennai,Hot Rolled Coil,267,PUN,P2,Road,2025-11-30,0
+ORD-1215,CMO Chennai,Steel Coils,171,PUN,P2,Rail,2026-01-14,0
+ORD-1216,CMO Chennai,Hot Rolled Coil,432,PUN,P1,Road,2025-12-18,0
+ORD-1217,CMO Delhi,Steel Coils,482,BOM,P2,Rail,2026-01-04,1
+ORD-1218,CMO Kolkata,Steel Coils,93,ICF,P2,Rail,2025-11-29,0
+ORD-1219,CMO Chennai,Cold Rolled Coil,540,KOL,P3,Rail,2025-12-30,1
+ORD-1220,CMO Pune,Cold Rolled Coil,56,JBP,P2,Road,2025-12-21,1
+ORD-1221,CMO Delhi,Cold Rolled Coil,242,KOL,P2,Road,2025-12-05,0
+ORD-1222,CMO Kolkata,Hot Rolled Coil,69,JBP,P1,Rail,2025-12-22,1
+ORD-1223,CMO Mumbai,Hot Rolled Coil,328,MAA,P1,Road,2026-01-02,0
+ORD-1224,CMO Kolkata,Cold Rolled Coil,162,ICF,P2,Rail,2025-12-09,1
+ORD-1225,CMO Chennai,Steel Coils,401,KOL,P1,Road,2025-12-19,1
+ORD-1226,CMO Kolkata,Steel Coils,84,ICF,P2,Road,2025-12-06,0
+ORD-1227,CMO Pune,Steel Coils,105,JBP,P2,Road,2025-11-29,0
+ORD-1228,CMO Chennai,Steel Coils,326,BOM,P3,Road,2025-12-07,1
+ORD-1229,CMO Pune,Cold Rolled Coil,91,JBP,P2,Road,2025-12-29,1
+ORD-1230,CMO Delhi,Steel Plates,205,KOL,P2,Rail,2026-01-05,1
+ORD-1231,CMO Kolkata,Cold Rolled Coil,50,JBP,P3,Road,2025-12-09,1
+ORD-1232,CMO Delhi,Steel Coils,349,JBP,P2,Rail,2025-12-29,0
+ORD-1233,CMO Mumbai,Hot Rolled Coil,355,PUN,P2,Rail,2025-12-10,0
+ORD-1234,CMO Pune,Cold Rolled Coil,134,DEL,P1,Rail,2025-12-17,1
+ORD-1235,CMO Delhi,Cold Rolled Coil,234,DEL,P3,Rail,2025-12-28,0
+ORD-1236,CMO Chennai,Hot Rolled Coil,492,PUN,P2,Road,2025-12-31,1
+ORD-1237,CMO Chennai,Cold Rolled Coil,201,MAA,P2,Rail,2025-12-25,0
+ORD-1238,CMO Chennai,Steel Plates,865,MAA,P1,Rail,2025-12-25,1
+ORD-1239,CMO Pune,Steel Plates,251,ICF,P3,Rail,2025-12-22,1
+ORD-1240,CMO Kolkata,Cold Rolled Coil,358,KOL,P2,Road,2025-12-18,0
+ORD-1241,CMO Delhi,Hot Rolled Coil,558,JBP,P2,Road,2025-12-29,0
+ORD-1242,CMO Pune,Cold Rolled Coil,50,ICF,P2,Rail,2025-12-12,1
+ORD-1243,CMO Chennai,Cold Rolled Coil,357,KOL,P2,Road,2025-12-14,0
+ORD-1244,CMO Pune,Cold Rolled Coil,50,MAA,P2,Road,2026-01-09,1
+ORD-1245,CMO Mumbai,Steel Plates,294,PUN,P3,Road,2025-12-21,0
+ORD-1246,CMO Mumbai,Cold Rolled Coil,79,DEL,P1,Road,2025-12-20,0
+ORD-1247,CMO Chennai,Cold Rolled Coil,481,MAA,P3,Rail,2026-01-03,1
+ORD-1248,CMO Chennai,Steel Coils,437,BOM,P2,Road,2026-01-22,0
+ORD-1249,CMO Delhi,Cold Rolled Coil,1242,DEL,P3,Road,2025-12-13,1
+ORD-1250,CMO Delhi,Steel Plates,164,MAA,P3,Rail,2025-12-12,1
+ORD-1251,CMO Delhi,Cold Rolled Coil,101,ICF,P2,Road,2025-12-14,1
+ORD-1252,CMO Kolkata,Cold Rolled Coil,50,JBP,P1,Rail,2025-12-18,1
+ORD-1253,CMO Kolkata,Cold Rolled Coil,341,KOL,P2,Road,2025-12-22,0
+ORD-1254,CMO Pune,Steel Coils,463,PUN,P1,Rail,2026-01-02,0
+ORD-1255,CMO Mumbai,Hot Rolled Coil,188,BOM,P2,Rail,2025-12-15,1
+ORD-1256,CMO Chennai,Steel Coils,1418,ICF,P2,Rail,2025-12-21,1
+ORD-1257,CMO Chennai,Steel Plates,215,JBP,P2,Road,2025-12-26,1
+ORD-1258,CMO Delhi,Steel Coils,74,KOL,P1,Rail,2025-12-09,1
+ORD-1259,CMO Kolkata,Hot Rolled Coil,1043,KOL,P3,Road,2026-01-05,0
+ORD-1260,CMO Mumbai,Steel Plates,1584,PUN,P1,Road,2026-01-09,1
+ORD-1261,CMO Pune,Steel Plates,50,BOM,P3,Rail,2025-12-10,1
+ORD-1262,CMO Delhi,Cold Rolled Coil,76,PUN,P2,Rail,2026-01-11,1
+ORD-1263,CMO Chennai,Steel Plates,629,BOM,P2,Road,2026-01-14,1
+ORD-1264,CMO Kolkata,Cold Rolled Coil,658,KOL,P3,Rail,2025-12-23,0
+ORD-1265,CMO Chennai,Hot Rolled Coil,240,JBP,P1,Rail,2025-12-24,1
+ORD-1266,CMO Delhi,Cold Rolled Coil,139,KOL,P2,Road,2025-12-18,1
+ORD-1267,CMO Chennai,Hot Rolled Coil,74,MAA,P2,Road,2026-01-14,1
+ORD-1268,CMO Mumbai,Cold Rolled Coil,571,ICF,P2,Road,2026-01-25,0
+ORD-1269,CMO Delhi,Steel Plates,128,MAA,P2,Road,2025-12-11,0
+ORD-1270,CMO Pune,Hot Rolled Coil,93,JBP,P3,Road,2025-12-27,0
+ORD-1271,CMO Delhi,Cold Rolled Coil,605,KOL,P3,Rail,2026-01-04,0
+ORD-1272,CMO Pune,Steel Coils,358,PUN,P2,Road,2026-01-08,1
+ORD-1273,CMO Kolkata,Steel Plates,638,PUN,P3,Road,2025-12-28,1
+ORD-1274,CMO Mumbai,Steel Plates,524,PUN,P1,Road,2026-01-06,1
+ORD-1275,CMO Mumbai,Steel Coils,511,JBP,P3,Rail,2025-12-07,0
+ORD-1276,CMO Kolkata,Cold Rolled Coil,50,DEL,P2,Road,2025-12-21,0
+ORD-1277,CMO Mumbai,Steel Coils,90,KOL,P2,Road,2025-12-19,1
+ORD-1278,CMO Chennai,Steel Plates,454,BOM,P1,Rail,2025-12-22,0
+ORD-1279,CMO Pune,Hot Rolled Coil,125,PUN,P2,Road,2026-01-11,0
+ORD-1280,CMO Mumbai,Hot Rolled Coil,50,ICF,P3,Road,2025-12-12,1
+ORD-1281,CMO Kolkata,Hot Rolled Coil,369,ICF,P1,Rail,2025-12-21,1
+ORD-1282,CMO Chennai,Steel Coils,127,BOM,P2,Rail,2025-12-10,0
+ORD-1283,CMO Chennai,Hot Rolled Coil,50,DEL,P1,Road,2025-12-24,1
+ORD-1284,CMO Delhi,Hot Rolled Coil,201,PUN,P3,Rail,2025-12-10,1
+ORD-1285,CMO Chennai,Hot Rolled Coil,1755,JBP,P2,Road,2026-01-16,1
+ORD-1286,CMO Pune,Cold Rolled Coil,53,ICF,P3,Road,2025-12-04,0
+ORD-1287,CMO Delhi,Steel Plates,342,MAA,P2,Rail,2025-12-29,1
+ORD-1288,CMO Pune,Hot Rolled Coil,903,PUN,P1,Rail,2025-12-28,1
+ORD-1289,CMO Delhi,Cold Rolled Coil,305,JBP,P2,Road,2025-12-17,1
+ORD-1290,CMO Chennai,Steel Coils,1240,BOM,P2,Rail,2025-12-15,1
+ORD-1291,CMO Delhi,Hot Rolled Coil,50,MAA,P2,Rail,2025-12-24,1
+ORD-1292,CMO Delhi,Steel Plates,599,PUN,P2,Rail,2025-12-24,0
+ORD-1293,CMO Chennai,Cold Rolled Coil,558,KOL,P3,Road,2025-12-25,0
+ORD-1294,CMO Pune,Steel Plates,50,MAA,P1,Rail,2025-12-21,0
+ORD-1295,CMO Chennai,Cold Rolled Coil,197,KOL,P1,Rail,2025-12-29,1
+ORD-1296,CMO Kolkata,Steel Plates,347,MAA,P2,Road,2025-12-18,1
+ORD-1297,CMO Mumbai,Hot Rolled Coil,261,DEL,P2,Road,2025-11-29,0
+ORD-1298,CMO Pune,Hot Rolled Coil,111,DEL,P2,Road,2025-12-12,0
+ORD-1299,CMO Kolkata,Steel Plates,103,DEL,P2,Road,2025-11-29,0
+ORD-1300,CMO Delhi,Steel Plates,454,JBP,P1,Rail,2025-12-05,0
+ORD-1301,CMO Delhi,Hot Rolled Coil,1295,BOM,P1,Rail,2025-12-18,1
+ORD-1302,CMO Pune,Steel Plates,288,DEL,P3,Rail,2025-12-15,1
+ORD-1303,CMO Pune,Steel Plates,218,ICF,P1,Rail,2025-12-19,1
+ORD-1304,CMO Kolkata,Steel Plates,50,ICF,P1,Rail,2025-12-04,0
+ORD-1305,CMO Kolkata,Steel Plates,350,BOM,P3,Road,2025-12-14,1
+ORD-1306,CMO Mumbai,Steel Coils,54,JBP,P1,Rail,2026-01-08,1
+ORD-1307,CMO Mumbai,Steel Coils,825,KOL,P1,Rail,2026-01-01,1
+ORD-1308,CMO Pune,Hot Rolled Coil,370,DEL,P3,Rail,2026-01-01,1
+ORD-1309,CMO Kolkata,Steel Coils,505,BOM,P1,Road,2025-12-28,0
+ORD-1310,CMO Pune,Steel Coils,237,JBP,P3,Rail,2026-01-19,1
+ORD-1311,CMO Chennai,Cold Rolled Coil,394,ICF,P1,Road,2025-12-09,1
+ORD-1312,CMO Pune,Steel Coils,85,MAA,P1,Rail,2025-12-14,0
+ORD-1313,CMO Pune,Steel Coils,123,JBP,P1,Road,2025-12-25,0
+ORD-1314,CMO Chennai,Steel Coils,322,DEL,P2,Road,2026-01-13,1
+ORD-1315,CMO Chennai,Cold Rolled Coil,1682,JBP,P3,Rail,2025-12-25,0
+ORD-1316,CMO Chennai,Cold Rolled Coil,66,DEL,P2,Rail,2025-12-15,0
+ORD-1317,CMO Kolkata,Steel Plates,389,DEL,P3,Rail,2025-11-29,0
+ORD-1318,CMO Kolkata,Hot Rolled Coil,127,MAA,P2,Road,2025-12-22,1
+ORD-1319,CMO Chennai,Cold Rolled Coil,387,DEL,P2,Rail,2026-01-03,0
+ORD-1320,CMO Pune,Steel Plates,692,MAA,P2,Road,2025-12-28,0
+ORD-1321,CMO Mumbai,Cold Rolled Coil,70,KOL,P2,Road,2025-11-29,0
+ORD-1322,CMO Chennai,Cold Rolled Coil,396,JBP,P1,Rail,2025-12-26,1
+ORD-1323,CMO Kolkata,Cold Rolled Coil,81,KOL,P3,Road,2025-12-22,1
+ORD-1324,CMO Kolkata,Steel Plates,578,JBP,P2,Road,2025-12-27,1
+ORD-1325,CMO Delhi,Steel Coils,216,ICF,P2,Rail,2025-12-13,0
+ORD-1326,CMO Delhi,Cold Rolled Coil,53,DEL,P2,Road,2025-11-30,0
+ORD-1327,CMO Mumbai,Steel Coils,50,PUN,P3,Road,2026-01-05,1
+ORD-1328,CMO Delhi,Cold Rolled Coil,80,KOL,P1,Road,2025-12-20,1
+ORD-1329,CMO Delhi,Hot Rolled Coil,529,PUN,P2,Road,2025-11-30,0
+ORD-1330,CMO Kolkata,Steel Coils,288,PUN,P3,Rail,2025-12-13,1
+ORD-1331,CMO Mumbai,Cold Rolled Coil,399,BOM,P2,Rail,2025-12-13,1
+ORD-1332,CMO Kolkata,Hot Rolled Coil,557,DEL,P3,Road,2026-01-03,1
+ORD-1333,CMO Pune,Steel Plates,50,ICF,P2,Road,2025-12-22,1
+ORD-1334,CMO Pune,Steel Coils,227,PUN,P3,Road,2025-12-29,1
+ORD-1335,CMO Delhi,Steel Plates,212,KOL,P1,Road,2025-12-17,1
+ORD-1336,CMO Kolkata,Hot Rolled Coil,1294,DEL,P3,Rail,2026-01-01,1
+ORD-1337,CMO Mumbai,Cold Rolled Coil,217,DEL,P2,Rail,2025-12-24,0
+ORD-1338,CMO Delhi,Steel Coils,50,JBP,P1,Rail,2026-01-04,1
+ORD-1339,CMO Chennai,Cold Rolled Coil,335,MAA,P3,Road,2025-12-04,0
+ORD-1340,CMO Mumbai,Hot Rolled Coil,334,KOL,P2,Road,2025-12-16,0
+ORD-1341,CMO Pune,Steel Coils,546,DEL,P3,Rail,2025-12-22,0
+ORD-1342,CMO Mumbai,Steel Coils,206,JBP,P2,Rail,2025-12-22,1
+ORD-1343,CMO Kolkata,Cold Rolled Coil,801,JBP,P2,Road,2026-01-03,0
+ORD-1344,CMO Chennai,Cold Rolled Coil,72,MAA,P2,Road,2026-01-12,1
+ORD-1345,CMO Mumbai,Steel Coils,321,KOL,P3,Road,2025-12-02,1
+ORD-1346,CMO Delhi,Hot Rolled Coil,1133,JBP,P2,Road,2025-12-23,1
+ORD-1347,CMO Pune,Hot Rolled Coil,402,DEL,P3,Rail,2025-12-25,1
+ORD-1348,CMO Chennai,Steel Coils,118,DEL,P2,Rail,2025-12-27,0
+ORD-1349,CMO Kolkata,Steel Plates,171,ICF,P3,Rail,2025-12-29,1
+ORD-1350,CMO Kolkata,Hot Rolled Coil,235,KOL,P1,Rail,2025-12-03,0
+ORD-1351,CMO Delhi,Cold Rolled Coil,356,JBP,P2,Road,2025-11-29,0
+ORD-1352,CMO Mumbai,Steel Plates,81,MAA,P2,Rail,2026-01-12,1
+ORD-1353,CMO Pune,Hot Rolled Coil,186,DEL,P2,Road,2026-01-03,0
+ORD-1354,CMO Delhi,Cold Rolled Coil,219,DEL,P2,Road,2025-11-29,0
+ORD-1355,CMO Delhi,Hot Rolled Coil,228,PUN,P2,Road,2025-11-29,0
+ORD-1356,CMO Pune,Cold Rolled Coil,502,JBP,P3,Road,2025-12-30,1
+ORD-1357,CMO Kolkata,Steel Coils,785,MAA,P1,Rail,2025-12-23,0
+ORD-1358,CMO Kolkata,Steel Plates,129,ICF,P1,Road,2025-11-29,0
+ORD-1359,CMO Kolkata,Steel Coils,110,MAA,P3,Rail,2025-12-17,1
+ORD-1360,CMO Mumbai,Cold Rolled Coil,111,PUN,P2,Road,2025-12-05,0
+ORD-1361,CMO Pune,Steel Coils,50,MAA,P1,Road,2026-01-02,1
+ORD-1362,CMO Kolkata,Steel Plates,60,KOL,P2,Rail,2025-12-09,0
+ORD-1363,CMO Delhi,Steel Coils,88,PUN,P3,Rail,2025-12-23,1
+ORD-1364,CMO Kolkata,Hot Rolled Coil,491,JBP,P2,Rail,2025-12-20,0
+ORD-1365,CMO Mumbai,Steel Coils,276,BOM,P3,Road,2025-12-12,0
+ORD-1366,CMO Mumbai,Steel Plates,77,PUN,P2,Rail,2025-11-29,0
+ORD-1367,CMO Delhi,Steel Plates,690,ICF,P2,Road,2026-01-14,1
+ORD-1368,CMO Chennai,Cold Rolled Coil,454,JBP,P2,Road,2025-12-14,0
+ORD-1369,CMO Kolkata,Steel Plates,50,MAA,P2,Rail,2026-01-06,1
+ORD-1370,CMO Chennai,Cold Rolled Coil,265,JBP,P1,Road,2025-12-28,1
+ORD-1371,CMO Kolkata,Steel Coils,50,KOL,P1,Rail,2025-12-25,1
+ORD-1372,CMO Kolkata,Cold Rolled Coil,280,MAA,P2,Rail,2025-12-10,0
+ORD-1373,CMO Delhi,Hot Rolled Coil,206,ICF,P3,Road,2025-11-29,0
+ORD-1374,CMO Delhi,Steel Coils,356,PUN,P2,Road,2026-01-13,0
+ORD-1375,CMO Chennai,Steel Coils,1421,MAA,P1,Rail,2025-12-10,1
+ORD-1376,CMO Kolkata,Cold Rolled Coil,386,PUN,P2,Rail,2025-12-13,1
+ORD-1377,CMO Delhi,Cold Rolled Coil,673,DEL,P1,Road,2025-12-15,1
+ORD-1378,CMO Delhi,Steel Plates,77,DEL,P2,Rail,2025-12-19,1
+ORD-1379,CMO Chennai,Cold Rolled Coil,483,PUN,P2,Rail,2025-12-08,0
+ORD-1380,CMO Kolkata,Hot Rolled Coil,636,KOL,P2,Road,2025-11-29,0
+ORD-1381,CMO Chennai,Hot Rolled Coil,332,JBP,P3,Rail,2025-12-24,0
+ORD-1382,CMO Kolkata,Steel Coils,244,KOL,P3,Rail,2025-12-09,0
+ORD-1383,CMO Pune,Cold Rolled Coil,948,KOL,P1,Road,2025-12-18,1
+ORD-1384,CMO Pune,Steel Plates,67,KOL,P2,Rail,2025-12-17,0
+ORD-1385,CMO Pune,Steel Plates,128,KOL,P2,Road,2025-12-06,0
+ORD-1386,CMO Chennai,Steel Plates,785,PUN,P2,Rail,2025-12-03,0
+ORD-1387,CMO Kolkata,Cold Rolled Coil,785,JBP,P2,Road,2025-12-14,0
+ORD-1388,CMO Mumbai,Steel Coils,220,JBP,P2,Road,2025-12-21,1
+ORD-1389,CMO Pune,Hot Rolled Coil,524,DEL,P3,Road,2025-12-14,0
+ORD-1390,CMO Kolkata,Steel Plates,50,BOM,P2,Road,2025-12-08,0
+ORD-1391,CMO Chennai,Steel Plates,829,BOM,P2,Rail,2025-11-30,0
+ORD-1392,CMO Mumbai,Steel Coils,151,KOL,P2,Rail,2025-12-24,0
+ORD-1393,CMO Pune,Steel Coils,206,JBP,P3,Road,2026-01-25,0
+ORD-1394,CMO Pune,Steel Plates,70,PUN,P3,Road,2025-12-20,1
+ORD-1395,CMO Mumbai,Steel Plates,631,BOM,P3,Rail,2025-12-17,0
+ORD-1396,CMO Chennai,Steel Coils,468,MAA,P2,Road,2025-12-16,1
+ORD-1397,CMO Mumbai,Cold Rolled Coil,356,PUN,P2,Road,2025-12-08,0
+ORD-1398,CMO Chennai,Steel Plates,307,PUN,P3,Rail,2025-12-18,0
+ORD-1399,CMO Kolkata,Cold Rolled Coil,434,ICF,P1,Rail,2025-12-31,1
+ORD-1400,CMO Kolkata,Cold Rolled Coil,152,MAA,P1,Road,2025-12-09,1
+ORD-1401,CMO Chennai,Cold Rolled Coil,50,BOM,P3,Rail,2025-12-16,1
+ORD-1402,CMO Pune,Steel Plates,1012,ICF,P2,Road,2025-12-19,1
+ORD-1403,CMO Delhi,Cold Rolled Coil,50,ICF,P2,Road,2025-11-29,0
+ORD-1404,CMO Pune,Steel Coils,289,JBP,P2,Rail,2025-12-15,1
+ORD-1405,CMO Kolkata,Steel Coils,1581,ICF,P1,Rail,2026-01-10,1
+ORD-1406,CMO Kolkata,Cold Rolled Coil,1234,PUN,P2,Rail,2025-12-09,0
+ORD-1407,CMO Chennai,Steel Coils,50,BOM,P2,Road,2025-12-14,0
+ORD-1408,CMO Kolkata,Steel Coils,504,MAA,P2,Rail,2026-01-02,1
+ORD-1409,CMO Chennai,Hot Rolled Coil,166,BOM,P1,Road,2025-11-29,0
+ORD-1410,CMO Delhi,Hot Rolled Coil,179,BOM,P1,Rail,2025-12-02,0
+ORD-1411,CMO Kolkata,Steel Coils,396,ICF,P3,Road,2025-11-29,1
+ORD-1412,CMO Mumbai,Steel Plates,161,DEL,P2,Road,2025-12-10,0
+ORD-1413,CMO Chennai,Steel Plates,72,ICF,P1,Road,2025-12-24,1
+ORD-1414,CMO Chennai,Steel Coils,1117,DEL,P3,Rail,2025-12-18,1
+ORD-1415,CMO Kolkata,Steel Plates,238,ICF,P2,Rail,2025-12-27,0
+ORD-1416,CMO Pune,Cold Rolled Coil,50,DEL,P2,Road,2025-12-12,0
+ORD-1417,CMO Mumbai,Hot Rolled Coil,193,DEL,P2,Rail,2025-12-06,0
+ORD-1418,CMO Mumbai,Cold Rolled Coil,184,JBP,P3,Road,2025-12-09,0
+ORD-1419,CMO Delhi,Steel Coils,172,ICF,P2,Road,2026-01-03,0
+ORD-1420,CMO Pune,Steel Coils,50,JBP,P3,Rail,2026-01-20,1
+ORD-1421,CMO Mumbai,Hot Rolled Coil,676,MAA,P2,Rail,2025-12-09,0
+ORD-1422,CMO Pune,Hot Rolled Coil,50,BOM,P2,Road,2025-12-25,1
+ORD-1423,CMO Mumbai,Steel Coils,342,PUN,P1,Road,2025-12-09,1
+ORD-1424,CMO Delhi,Steel Coils,377,MAA,P1,Road,2025-11-29,0
+ORD-1425,CMO Delhi,Cold Rolled Coil,447,KOL,P2,Road,2025-12-05,0
+ORD-1426,CMO Delhi,Hot Rolled Coil,57,ICF,P1,Rail,2026-01-05,1
+ORD-1427,CMO Kolkata,Steel Plates,50,JBP,P1,Rail,2025-12-29,0
+ORD-1428,CMO Pune,Hot Rolled Coil,105,BOM,P3,Rail,2025-11-29,0
+ORD-1429,CMO Kolkata,Hot Rolled Coil,50,ICF,P2,Rail,2026-01-10,0
+ORD-1430,CMO Chennai,Cold Rolled Coil,309,JBP,P2,Rail,2025-12-09,0
+ORD-1431,CMO Mumbai,Steel Coils,276,JBP,P2,Road,2026-01-01,0
+ORD-1432,CMO Delhi,Hot Rolled Coil,501,BOM,P2,Rail,2025-12-13,0
+ORD-1433,CMO Mumbai,Steel Coils,76,KOL,P2,Road,2025-12-07,0
+ORD-1434,CMO Pune,Cold Rolled Coil,173,ICF,P2,Road,2025-12-15,0
+ORD-1435,CMO Kolkata,Steel Coils,311,ICF,P2,Rail,2025-12-14,0
+ORD-1436,CMO Kolkata,Hot Rolled Coil,592,ICF,P3,Rail,2025-12-16,0
+ORD-1437,CMO Kolkata,Hot Rolled Coil,185,DEL,P3,Road,2025-12-23,0
+ORD-1438,CMO Chennai,Cold Rolled Coil,449,JBP,P2,Road,2025-12-21,0
+ORD-1439,CMO Chennai,Hot Rolled Coil,831,BOM,P1,Road,2025-11-30,0
+ORD-1440,CMO Chennai,Hot Rolled Coil,50,ICF,P3,Road,2025-12-11,1
+ORD-1441,CMO Delhi,Cold Rolled Coil,551,DEL,P3,Road,2025-12-27,1
+ORD-1442,CMO Pune,Steel Plates,267,PUN,P2,Road,2025-12-27,0
+ORD-1443,CMO Kolkata,Steel Coils,619,DEL,P2,Road,2025-11-29,0
+ORD-1444,CMO Kolkata,Hot Rolled Coil,52,MAA,P2,Road,2025-12-15,0
+ORD-1445,CMO Mumbai,Cold Rolled Coil,68,KOL,P2,Road,2025-12-07,0
+ORD-1446,CMO Delhi,Hot Rolled Coil,287,PUN,P1,Road,2026-01-05,1
+ORD-1447,CMO Kolkata,Steel Coils,50,DEL,P3,Road,2025-12-09,1
+ORD-1448,CMO Kolkata,Steel Plates,410,DEL,P2,Rail,2025-12-17,1
+ORD-1449,CMO Pune,Cold Rolled Coil,50,DEL,P2,Rail,2025-12-25,0
+ORD-1450,CMO Delhi,Steel Plates,1682,ICF,P2,Road,2026-01-13,0
+ORD-1451,CMO Kolkata,Cold Rolled Coil,269,PUN,P2,Rail,2025-12-13,1
+ORD-1452,CMO Pune,Steel Plates,356,JBP,P1,Road,2025-11-29,0
+ORD-1453,CMO Kolkata,Hot Rolled Coil,50,MAA,P2,Rail,2026-01-06,1
+ORD-1454,CMO Pune,Steel Plates,308,PUN,P1,Road,2026-01-11,1
+ORD-1455,CMO Chennai,Hot Rolled Coil,277,JBP,P2,Road,2026-01-18,0
+ORD-1456,CMO Mumbai,Steel Coils,94,DEL,P3,Rail,2025-12-07,0
+ORD-1457,CMO Chennai,Cold Rolled Coil,122,PUN,P3,Rail,2025-12-18,0
+ORD-1458,CMO Kolkata,Hot Rolled Coil,466,JBP,P2,Road,2025-12-02,0
+ORD-1459,CMO Mumbai,Hot Rolled Coil,170,JBP,P1,Road,2025-12-16,1
+ORD-1460,CMO Mumbai,Steel Coils,273,BOM,P3,Rail,2025-12-04,0
+ORD-1461,CMO Chennai,Steel Plates,462,JBP,P1,Road,2026-01-15,1
+ORD-1462,CMO Delhi,Hot Rolled Coil,549,JBP,P2,Road,2026-01-16,1
+ORD-1463,CMO Delhi,Hot Rolled Coil,134,KOL,P2,Rail,2026-01-11,1
+ORD-1464,CMO Mumbai,Hot Rolled Coil,50,PUN,P3,Rail,2025-12-21,1
+ORD-1465,CMO Delhi,Steel Plates,847,ICF,P2,Rail,2025-11-29,0
+ORD-1466,CMO Mumbai,Cold Rolled Coil,618,DEL,P3,Road,2025-12-26,1
+ORD-1467,CMO Pune,Hot Rolled Coil,197,MAA,P1,Rail,2025-12-11,1
+ORD-1468,CMO Pune,Steel Coils,390,DEL,P2,Road,2026-01-12,0
+ORD-1469,CMO Chennai,Cold Rolled Coil,51,PUN,P2,Road,2025-12-12,1
+ORD-1470,CMO Chennai,Steel Coils,417,BOM,P2,Road,2025-12-17,1
+ORD-1471,CMO Delhi,Cold Rolled Coil,85,MAA,P3,Road,2025-12-15,1
+ORD-1472,CMO Mumbai,Steel Plates,95,ICF,P3,Rail,2026-01-10,1
+ORD-1473,CMO Chennai,Steel Coils,200,ICF,P1,Rail,2025-12-14,1
+ORD-1474,CMO Pune,Steel Plates,710,KOL,P1,Rail,2025-11-29,0
+ORD-1475,CMO Mumbai,Hot Rolled Coil,690,JBP,P1,Rail,2026-01-01,1
+ORD-1476,CMO Kolkata,Hot Rolled Coil,992,ICF,P2,Rail,2025-11-29,0
+ORD-1477,CMO Kolkata,Steel Plates,1193,JBP,P2,Road,2025-12-11,0
+ORD-1478,CMO Mumbai,Hot Rolled Coil,66,PUN,P2,Rail,2025-12-25,1
+ORD-1479,CMO Pune,Steel Plates,129,PUN,P1,Rail,2025-12-18,1
+ORD-1480,CMO Mumbai,Hot Rolled Coil,76,ICF,P2,Rail,2025-12-22,1
+ORD-1481,CMO Delhi,Steel Coils,50,DEL,P3,Road,2026-01-05,0
+ORD-1482,CMO Mumbai,Cold Rolled Coil,50,PUN,P3,Rail,2025-12-07,0
+ORD-1483,CMO Chennai,Hot Rolled Coil,198,JBP,P1,Road,2025-12-20,0
+ORD-1484,CMO Chennai,Steel Plates,569,ICF,P2,Road,2025-11-29,0
+ORD-1485,CMO Kolkata,Cold Rolled Coil,236,DEL,P1,Rail,2025-12-04,0
+ORD-1486,CMO Mumbai,Cold Rolled Coil,492,MAA,P2,Road,2025-12-09,1
+ORD-1487,CMO Chennai,Steel Plates,120,KOL,P3,Rail,2025-12-08,0
+ORD-1488,CMO Kolkata,Hot Rolled Coil,68,JBP,P3,Road,2025-12-14,0
+ORD-1489,CMO Chennai,Steel Plates,443,ICF,P1,Road,2025-11-29,1
+ORD-1490,CMO Pune,Steel Coils,187,KOL,P3,Rail,2025-12-16,1
+ORD-1491,CMO Chennai,Steel Coils,320,KOL,P3,Road,2026-02-04,1
+ORD-1492,CMO Mumbai,Steel Plates,448,DEL,P3,Rail,2025-12-20,1
+ORD-1493,CMO Kolkata,Cold Rolled Coil,472,ICF,P2,Road,2025-11-29,0
+ORD-1494,CMO Mumbai,Steel Plates,479,ICF,P2,Road,2025-12-20,1
+ORD-1495,CMO Pune,Hot Rolled Coil,357,BOM,P3,Rail,2025-12-31,1
+ORD-1496,CMO Chennai,Cold Rolled Coil,583,MAA,P3,Road,2025-12-13,1
+ORD-1497,CMO Chennai,Steel Coils,673,DEL,P2,Road,2025-12-12,1
+ORD-1498,CMO Pune,Cold Rolled Coil,174,BOM,P2,Rail,2025-12-19,0
+ORD-1499,CMO Pune,Hot Rolled Coil,162,DEL,P3,Rail,2026-01-09,1
